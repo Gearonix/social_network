@@ -2,3 +2,20 @@
 избранные
 добавить прелоадер на profile
 добавить follow
+
+сделать background
+сделать logout
+
+добавить темную/светлую тему
+
+зарефакторить api backend
+
+сделать прелоадер, убрать login, ты знаешь, что делать
+
+решить баг с delete user_avatar/delete background
+
+доделать функционал delete background
+
+сделать так, чтобы при нажатии на background можно было изменять его
+
+добавить валидацию к инпутам в change_profile

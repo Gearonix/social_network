@@ -16,6 +16,22 @@ export const UserImageStyle = styled.Image`
   width: 120px;
   height: 120px;
   borderRadius: 100;
+  margin: 0 auto;
+`
+export const UserText = styled.Text`
+  font-size: 50px;
+  color : white;
+  
+
+`
+export const UserImageContainer = styled.TouchableOpacity`
+  width: 120px;
+  height: 120px;
+  borderRadius: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background : ${props => props.color || 'transparent'};
 `
 
 export const FollowButtonContainer = styled.View`
@@ -192,4 +208,11 @@ export const PostLikesText = styled.Text`
 `
 export const HeartContainer = styled.View`
   margin-right: 16px;
+`
+export const Description = styled.Text`
+  margin-top: 14px;
+  color : rgba(204, 204, 204, 1);
+  font-size: 18px;
+  text-align: center;
+
 `

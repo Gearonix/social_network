@@ -1,9 +1,9 @@
 import {FullContainer} from "../../global/styles";
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useFormik} from "formik";
 import {ButtonText, Image, Input, Link, Title, Button, Error} from "./login.styles";
 import {useDispatch, useSelector} from "react-redux";
-import {login,register} from "../../reducers/login_reducer";
+import {getAuth, login, register} from "../../reducers/login_reducer";
 import {loginValidator, registerValidator} from "../../validators";
 
 
@@ -15,12 +15,12 @@ const Login = ({navigation}) => {
     const initialValues = {username: '', password: ''}
     const callback = isLogin ? login : register
     const onSubmit = async data => {
-        const {payload : Error} = await dispatch(callback(data))
+        const {payload: Error} = await dispatch(callback(data))
         if (Error) setError(Error)
     }
     useEffect(() => {
-
-    },[])
+        dispatch(getAuth())
+    }, [])
 
     const formik = useFormik({initialValues, onSubmit, validate: isLogin ? loginValidator : registerValidator})
     if (user_id) {
@@ -39,7 +39,7 @@ const Login = ({navigation}) => {
     </FullContainer>
 }
 
-const createInput = (name, formik) => <Input onChangeText={formik.handleChange(name)} value={formik.values[name]}
+export const createInput = (name, formik,maxLength='20') => <Input onChangeText={formik.handleChange(name)} value={formik.values[name]}
                                              style={{paddingVertical: 0, outline: 'none'}}
-                                             error={formik.errors[name]} maxLength={'20'}/>
+                                             error={formik.errors[name]} maxLength={maxLength}/>
 export default Login

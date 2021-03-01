@@ -1,11 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import Profile from "./components/profile/profile";
 import Login from "./components/login/login";
 import {Provider} from "react-redux";
 import store from "./store";
+import EditProfileSettings from "./components/edit_profile_settings/edit_profile_settings";
+import EditProfile from "./components/edit_profile/edit_profile";
 
 const headerStyle = (title,options={}) => ({
     title,
@@ -18,9 +19,9 @@ const headerStyle = (title,options={}) => ({
     headerTitleStyle: {
         fontWeight: 'normal',
         fontSize: options.fz ?? '20px',
-        textAlign: 'center',
+        textAlign: options.ta ? 'left' : 'center',
     },
-    ...options.left
+    ...options.others
 })
 
 
@@ -31,7 +32,15 @@ const AppNagigator = createStackNavigator({
     },
     Login: {
         screen: Login,
-        navigationOptions: headerStyle('Welcome!',{color : 'white',left : {headerLeft : null}})
+        navigationOptions: headerStyle('Welcome!',{others : {headerLeft : null}})
+    },
+    EditProfileSettings : {
+        screen : EditProfileSettings,
+        navigationOptions: headerStyle('Settings',{ta : true})
+    },
+    EditProfile : {
+        screen : EditProfile,
+        navigationOptions: headerStyle('Edit profile',{ta: true})
     }
 })
 

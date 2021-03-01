@@ -1,22 +1,76 @@
 const express = require('express');
 const app = express();
-const {MongoClient} = require('mongodb');
+const {MongoClient,ObjectId} = require('mongodb');
 const cors = require('cors')
 const cookieparser = require('cookie-parser');
-app.use(express.json())
+const multer = require('multer');
+const {v4 : create_id} = require('uuid');
+const fs = require('fs');
+
 const cors_options = {
     origin : 'http://localhost:19006',
     credentials: true
 }
+
+app.use(express.json())
 app.use(cors(cors_options))
 app.use(cookieparser())
-app.get('auth',(req,res) =>{
-    if (!req.cookies.id){
-        res.json(error(404,'Cookie not found'))
-        return
-    }
-    res.json(ok(req.cookies.id))
+app.use(express.static('static'));
+
+
+app.post('/auth',(req,res) =>{
+    db.collection('users').find({_id : new ObjectId(req.body.user_id)},
+        {projection: {password: 0}}).toArray((err,result)  => {
+            if (err){
+                res.json(error(err))
+                return
+            }
+            res.json(ok(result[0]))
+    })
 })
+
+const user_avatars_storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, `static/${req.params.mode}`);
+    },
+    filename: function(req, file, cb) {
+        cb(null, create_id() + '____' + file.originalname);
+    }
+})
+const fileFilter = function (req, file, cb){
+    cb(null, true);
+}
+
+
+app.post('/upload/:mode',(req,res) => {
+    const upload = multer({storage: user_avatars_storage,fileFilter}).single('image')
+    upload(req,res,(err) => {
+        if (err) {console.log(err);
+            res.json(error(err));
+            return}
+        const filename = res.req.file.filename
+        res.json(ok(filename))
+    })
+
+})
+app.post('/setavatar',(req,res) => {
+    const {user_id,filename,old_file_name,mode} = req.body
+    replace_object = {}
+    replace_object[mode=='user_avatars' ? 'avatar_path' : 'background_path'] = filename
+    db.collection('users').updateOne({_id : new ObjectId(user_id)},{$set : replace_object})
+    if (old_file_name){
+        try{fs.unlinkSync(`./static/user_avatars/${old_file_name}`)}
+        catch (err){console.log(err)}}
+    res.json(ok())
+})
+
+
+app.post('/setuserdata',(req,res) => {
+    const {username,description,user_id} = req.body
+    db.collection('users').updateOne({_id : new ObjectId(user_id)},{$set : {username,description}});
+    res.json(ok())
+})
+
 const main = async () => {
     const URI = 'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false'
     const client = new MongoClient(URI);

@@ -18,17 +18,20 @@ import {
     PostOthers,
     PostTitle,
     PostUserImage, UnderLine,
-    UserImageStyle
+    UserImageStyle, UserImageContainer, UserText
 } from "./profile.styles";
+
 import {View} from "react-native";
 import {Button, Flex, Margin0Auto, Text} from "../../global/styles";
 import {AntDesign, Feather} from "@expo/vector-icons";
-import React from "react";
-import UserAvatar from 'react-native-user-avatar';
+import React,{useState,useEffect} from "react";
+import config from "../../config";
+import {ActionSheetIOS,Platform} from "react-native";
+import {randomInteger} from "../../tools";
 
 export const Background = ({image}) => {
-    const back = image ? require(image) : require('./../../source/background_profile.png')
-    return <><BackgroundImage source={back}/>
+    const path = image ? `${config.BASE_URL}/backgrounds/${image}` : 'https://html5css.ru/css/img_lights.jpg'
+    return <><BackgroundImage source={{uri  : path}}/>
         <BackgroundImage as={View}>
             <ArrowLeft>
                 <CreateIcon icon={'arrowleft'}/>
@@ -36,11 +39,11 @@ export const Background = ({image}) => {
         </BackgroundImage></>
 }
 
-export const EditProfile = () => {
+export const EditProfile = ({callback}) => {
     return <Margin0Auto>
         <Button background={'#525252'} width={'193px'} height={'38px'}
                 border={'2px solid white'}>
-            <Text>Edit profile</Text>
+            <Text onPress={callback}>Edit profile</Text>
         </Button>
     </Margin0Auto>
 }
@@ -58,14 +61,27 @@ export const FollowButtons = () => {
     </Margin0Auto>
 }
 
-export const UserImage = ({image,username}) => {
-    const colors = ['#00d9ff','#ed77df','#57eb8b','#e1eb57','#f7a120']
-    const avatar = image ?  <UserImageStyle source={require(image)}/> :
-        <UserAvatar size={100} name={username ?? 'User'} bgColors={colors}/>
+export const UserImage = ({username, callback,image}) => {
+    const src = `${config.BASE_URL}/user_avatars/${image}`
+    const avatar = image ?
+        <UserImageStyle source={{uri: src}}/> :
+        <DefaultUserAvatar text={username ?? 'User'} callback={() => callback('user_avatars')} />
     return <Margin0Auto mt={'60px'}>
+        <UserImageContainer onPress={() => callback('user_avatars')}>
             {avatar}
+        </UserImageContainer>
     </Margin0Auto>
 }
+export const DefaultUserAvatar = ({text,callback})  => {
+    const colors = ['#00d9ff', '#ed77df', '#57eb8b', '#e1eb57', '#f7a120']
+    const [color,setColor] = useState(colors[0])
+    useEffect(() => {
+        setColor(colors[randomInteger(0,colors.length-1)])
+    },[])
+    return <UserImageContainer color={color} onPress={callback}>
+        <UserText>{text.slice(0,2)}</UserText></UserImageContainer>
+}
+
 export const Friends = ({data}) => {
     const renderItem = (item) => {
         return <FriendsItem key={item.user_id}>
@@ -95,10 +111,10 @@ export const AddPostInput = () => {
     </AddPostContainer>
 }
 export const Posts = () => {
-    const elements = posts_data.map((item,index) => <PostItem data={item} key={index} />)
+    const elements = posts_data.map((item, index) => <PostItem data={item} key={index}/>)
     return <>
         {elements}
-        </>
+    </>
 }
 
 const posts_data = [
@@ -112,15 +128,15 @@ const posts_data = [
         comments: 12,
         chosen: true,
         message: 'qwe',
-        people : [require('./../../source/user_image.jpg'),
+        people: [require('./../../source/user_image.jpg'),
             require('./../../source/user_image.jpg'), require('./../../source/user_image.jpg'),
             require('./../../source/user_image.jpg')]
     }
 ]
 const PostItem = ({data}) => {
     const people = data.people.map(item => <ItemHwoLikePost source={item}/>)
-    const images = data.images.map(item =>   <PostImage source={item}/>)
-    const {user_id,user_name,date,likes,liked,comments,chosen,message} = data
+    const images = data.images.map(item => <PostImage source={item}/>)
+    const {user_id, user_name, date, likes, liked, comments, chosen, message} = data
     return <Post>
         <PostHeader>
             <PostUserImage source={require('./../../source/user_image.jpg')}/>
@@ -155,4 +171,4 @@ const PostItem = ({data}) => {
         </ChosenBlock>
     </Post>
 }
-const CreateIcon = ({icon,color}) => <AntDesign name={icon} size={24} color={color ?? 'white'}/>
+const CreateIcon = ({icon, color}) => <AntDesign name={icon} size={24} color={color ?? 'white'}/>

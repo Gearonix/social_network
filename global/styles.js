@@ -55,4 +55,3 @@ export const Page = styled.View`
 export const FullContainer = styled(Container)`
   height: 100%;
 `
-console.log(Dimensions.get('window').height)

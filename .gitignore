@@ -15,6 +15,11 @@ app.json
 babel.config.js
 yarn-error.log
 yarn.lock
-assets
+*.txt
+/source
+config.js
+/for_work
+/backend/static
+
 # macOS
 .DS_Store
