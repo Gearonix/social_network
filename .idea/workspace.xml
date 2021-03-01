@@ -2,14 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="be63f78c-ebe9-4e2f-a5c9-6943f7071937" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/App.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/profile/profile.items.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/profile/profile.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/profile/profile.styles.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/for_work/todo.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/global/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/login/login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/login/login.styles.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/others/navbar/navbar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reducers/login_reducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/store.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/validators.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/profile/profile.items.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.items.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/profile/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/profile/profile.styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/for_work/todo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/for_work/todo.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/global/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/global/styles.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
@@ -18,10 +25,20 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1p63joctVEsTbwEveSVqbWDB605" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -30,8 +47,30 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../React/project" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager" selected="Node.js.index.js">
+    <configuration name="index.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/backend/index.js" working-dir="$PROJECT_DIR$/backend">
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.index.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -41,7 +80,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1614489849700</updated>
-      <workItem from="1614489850793" duration="497000" />
+      <workItem from="1614489850793" duration="1567000" />
+      <workItem from="1614509314033" duration="17899000" />
     </task>
     <servers />
   </component>

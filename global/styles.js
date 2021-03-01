@@ -1,4 +1,6 @@
 import styled from 'styled-components/native';
+import {Dimensions} from 'react-native';
+
 const pt = (param,def='0px') => (props) => props[param] ? props[param] : def
 export const Button = styled.TouchableOpacity`
   background : ${pt('background')};
@@ -6,6 +8,7 @@ export const Button = styled.TouchableOpacity`
   border-radius: ${pt('borderRadius','40px')};
   width: ${pt('width')};
   height: ${pt('height')};
+  margin: ${pt('m','0px')};
   justify-content: center;
   align-items: center;
   display: flex;
@@ -33,7 +36,23 @@ export const Text = styled.Text`
 `
 export const Container = styled.ScrollView`
   width: 100%;
-  height: 100%;
   position: relative;
   background: rgba(25, 26, 29, 1);
 `
+export const Flex = styled.View`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: ${pt('jc','flex-start')};
+  align-items: ${pt('ai','flex-start')};
+`
+export const Page = styled.View`
+  width: 100%;
+  height: ${Dimensions.get('window').height-50+'px'};
+  background: rgba(25, 26, 29, 1);
+
+`
+export const FullContainer = styled(Container)`
+  height: 100%;
+`
+console.log(Dimensions.get('window').height)

@@ -15,6 +15,7 @@ export const ArrowLeft = styled.View`
 export const UserImageStyle = styled.Image`
   width: 120px;
   height: 120px;
+  borderRadius: 100;
 `
 
 export const FollowButtonContainer = styled.View`
@@ -91,9 +92,8 @@ export const PostInput = styled.View`
   border-radius: 6px;
 `
 export const Post = styled.View`
-  min-height: 422px;
+  min-height: 490px;
   border-radius: 20px;
-  border: 2px solid red;
 `
 export const PostHeader = styled.View`
   height: 73px;
@@ -119,7 +119,7 @@ export const PostHeaderContainer = styled.View`
   height: 100%;
 `
 export const PostDate = styled.Text`
-  color : #c4c4c4;
+  color: #c4c4c4;
   margin-top: 6px;
   font-size: 13px;
   margin-left: 8px;
@@ -131,10 +131,12 @@ export const PostOthers = styled.View`
   padding-left: 10px;
 `
 export const PostImage = styled.Image`
-  height: 194px;
-  width: 100%;
+  height: 174px;
+  width: 320px;
   margin-top: 10px;
 `
+
+
 export const PostMessage = styled(PostTitle)`
   font-size: 16px;
   margin-top: 29px;
@@ -142,19 +144,52 @@ export const PostMessage = styled(PostTitle)`
 export const ChosenBlock = styled.View`
   width: 100%;
   height: 85px;
-  border: 2px solid red;
 `
 export const PeopleWhoLikePost = styled.View`
   width: 113px;
   height: 42px;
-  border: 2px solid red;
   display: flex;
-  margin-left: -5px;
+  margin-top: 5px;
   flex-direction: row;
-  
+
 `
 export const ItemHwoLikePost = styled.Image`
   width: 32px;
-  height: 100%;
+  height: 32px;
+  margin-top: 5px;
+  borderRadius: 360;
+`
+export const UnderLine = styled.View`
+  background: #525252;
+  height: 1px;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 16px;
+`
+export const LikesAndComments = styled.View`
+  height: 72px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+`
+export const CircleButton = styled.TouchableOpacity`
   borderRadius: 100;
+  background: ${props => !props.liked ? '#525252' : '#5458F7'};
+  height: 42px;
+  width: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 16px;
+`
+export const PostLikesText = styled.Text`
+  color: ${props => props.liked ? '#5458F7' : 'white'};
+  font-size: 14px;
+  margin-left: 8px;
+
+`
+export const HeartContainer = styled.View`
+  margin-right: 16px;
 `
