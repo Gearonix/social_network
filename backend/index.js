@@ -1,14 +1,14 @@
 const express = require('express');
 const app = express();
-const {MongoClient,ObjectId} = require('mongodb');
+const {MongoClient, ObjectId} = require('mongodb');
 const cors = require('cors')
 const cookieparser = require('cookie-parser');
 const multer = require('multer');
-const {v4 : create_id} = require('uuid');
+const {v4: create_id} = require('uuid');
 const fs = require('fs');
 
 const cors_options = {
-    origin : 'http://localhost:19006',
+    origin: 'http://localhost:19006',
     credentials: true
 }
 
@@ -18,56 +18,80 @@ app.use(cookieparser())
 app.use(express.static('static'));
 
 
-app.post('/auth',(req,res) =>{
-    db.collection('users').find({_id : new ObjectId(req.body.user_id)},
-        {projection: {password: 0}}).toArray((err,result)  => {
-            if (err){
-                res.json(error(err))
-                return
-            }
-            res.json(ok(result[0]))
+app.put('/getuser', (req, res) => {
+    db.collection('users').find({_id: new ObjectId(req.body.user_id)},
+        {projection: {password: 0}}).toArray((err, result) => {
+        if (err) {
+            res.json(error(err))
+            return
+        }
+        res.json(ok(result[0]))
     })
 })
 
+app.get('/users', (req, res) => {
+    const username = req.query.username
+    db.collection('users').find({username : {$regex:`.*${username}.*`}}, {
+        projection: {
+            password: 0, background_path: 0, online: 0,
+            followers_count: 0
+        }
+    }).toArray((err, result) => {
+        if (err) {
+            res.json(error(err))
+            return
+        }
+        res.json(ok(result))
+    })
+})
+
+
 const user_avatars_storage = multer.diskStorage({
-    destination: function(req, file, cb) {
+    destination: function (req, file, cb) {
         cb(null, `static/${req.params.mode}`);
     },
-    filename: function(req, file, cb) {
+    filename: function (req, file, cb) {
         cb(null, create_id() + '____' + file.originalname);
     }
 })
-const fileFilter = function (req, file, cb){
+const fileFilter = function (req, file, cb) {
     cb(null, true);
 }
 
 
-app.post('/upload/:mode',(req,res) => {
-    const upload = multer({storage: user_avatars_storage,fileFilter}).single('image')
-    upload(req,res,(err) => {
-        if (err) {console.log(err);
+app.post('/users/upload/:mode', (req, res) => {
+    const upload = multer({storage: user_avatars_storage, fileFilter}).single('image')
+    upload(req, res, (err) => {
+        if (err) {
+            console.log(err);
             res.json(error(err));
-            return}
+            return
+        }
         const filename = res.req.file.filename
         res.json(ok(filename))
     })
 
 })
-app.post('/setavatar',(req,res) => {
-    const {user_id,filename,old_file_name,mode} = req.body
+app.put('/users/setavatar', (req, res) => {
+    const {user_id, filename, old_file_name, mode} = req.body
     replace_object = {}
-    replace_object[mode=='user_avatars' ? 'avatar_path' : 'background_path'] = filename
-    db.collection('users').updateOne({_id : new ObjectId(user_id)},{$set : replace_object})
-    if (old_file_name){
-        try{fs.unlinkSync(`./static/user_avatars/${old_file_name}`)}
-        catch (err){console.log(err)}}
+    replace_object[mode == 'user_avatars' ? 'avatar_path' : 'background_path'] = filename
+    console.log(mode)
+    db.collection('users').updateOne({_id: new ObjectId(user_id)}, {$set: replace_object})
+    if (old_file_name) {
+        try {
+            fs.unlinkSync(`./static/user_avatars/${old_file_name}`)
+        } catch (err) {
+            console.log(err)
+        }
+    }
     res.json(ok())
 })
 
 
-app.post('/setuserdata',(req,res) => {
-    const {username,description,user_id} = req.body
-    db.collection('users').updateOne({_id : new ObjectId(user_id)},{$set : {username,description}});
+app.put('/users/setuserdata', (req, res) => {
+    const {username, description, user_id} = req.body
+    db.collection('users').updateOne({_id: new ObjectId(user_id)}, {$set: {username, description}});
     res.json(ok())
 })
 
@@ -90,21 +114,21 @@ const error = (status = 500, message = 'Request Error', data = {}) => ({status, 
 const ok = (data = {}) => ({status: 200, message: 'OK', data})
 
 
-app.post('/login', (req, res) => {
+app.put('/auth/login', (req, res) => {
     db.collection('users').find(req.body, {projection: {password: 0}}).toArray((err, result) => {
         if (result.length === 0) {
             res.json(error(404, 'User not found'))
             return
         }
-        res.cookie('id',result[0]._id)
+        res.cookie('id', result[0]._id)
         res.json(ok(result[0]))
     })
 })
-app.post('/register', (req, res) => {
+app.post('/auth/register', (req, res) => {
     const {username, password} = req.body
     const req_data = {
         username, password, description: null, online: false, avatar_path: null, followers_count: 0,
-        background_path : null
+        background_path: null
     }
     db.collection('users').find({username}).toArray((err, result) => {
         if (result.length > 0) {
@@ -116,7 +140,7 @@ app.post('/register', (req, res) => {
                 res.json(error())
                 return
             }
-            res.cookie('id',result.ops[0]._id)
+            res.cookie('id', result.ops[0]._id)
             res.json(ok(result.ops[0]))
         })
     })

@@ -1785,13 +1785,6 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.10.tgz#5dda643e19e587793bc2034dd9bf7398ad43d401"
   integrity sha512-rk4sWFsmtOw8oyx8SD3KSvawwaK7gRBSEIy2TAwURyGt+3TizssXP1r8nx3zY+R7v2vYYHXZ+k2/GULAT/bcaQ==
 
-"@react-native-cookies/cookies@^6.0.4":
-  version "6.0.4"
-  resolved "https://registry.yarnpkg.com/@react-native-cookies/cookies/-/cookies-6.0.4.tgz#4914bfa1110361ec67281c6d7ce9fde6e3b1e7e8"
-  integrity sha512-VOZvNtxUsNmWV/H6/JqO/HPiNJQa5zvmPv3YnuK3uu9CcTEWsvTsq6VmvhJci4DTilI1e1/SF6z6yJwmscS+iw==
-  dependencies:
-    invariant "^2.2.4"
-
 "@react-navigation/core@^3.7.9":
   version "3.7.9"
   resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-3.7.9.tgz#3f7ba0fcb6c8d74a77a057382af198d84c7c4e3b"
@@ -3843,6 +3836,11 @@ hermes-profile-transformer@^0.0.6:
   dependencies:
     source-map "^0.7.3"
 
+hex-to-rgba@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/hex-to-rgba/-/hex-to-rgba-2.0.1.tgz#4176977882a1cb32b83ce5ab1db6828ab84d5a13"
+  integrity sha512-5XqPJBpsEUMsseJUi2w2Hl7cHFFi3+OO10M2pzAvKB1zL6fc+koGMhmBqoDOCB4GemiRM/zvDMRIhVw6EkB8dQ==
+
 hoist-non-react-statics@^2.3.1:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
@@ -3947,11 +3945,6 @@ inherits@2.0.3:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
   integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
 
-initials@^3.0.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/initials/-/initials-3.1.1.tgz#a63395b2c46bc56207b4b964a6eb185dbd8458e6"
-  integrity sha512-imRkwIpCUer+w9NB41dTENhJrTQTGOJthRa3URF0O9+L7MOMBPmN8njwkiX4u8YnzxbjEp4Is0ohiW6NSA8ZCw==
-
 inline-style-prefixer@^5.1.0:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/inline-style-prefixer/-/inline-style-prefixer-5.1.2.tgz#e5a5a3515e25600e016b71e39138971228486c33"
@@ -3979,7 +3972,7 @@ inquirer@^3.0.6:
     strip-ansi "^4.0.0"
     through "^2.3.6"
 
-invariant@^2.1.0, invariant@^2.2.2, invariant@^2.2.4:
+invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -5696,12 +5689,12 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
-react-native-cookies@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-cookies/-/react-native-cookies-3.3.0.tgz#527f65eb2d8a7a000107706bb11beb57f511e701"
-  integrity sha512-GobKo8Kvyuif6ROj6rDAjQJpCSLazcZl6AgZb1z7ldB9FrMtetQzXvIehS0QcwbpnXWyJzXJaY0yrlDjFz+NaA==
+react-native-easy-content-loader@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/react-native-easy-content-loader/-/react-native-easy-content-loader-0.3.2.tgz#5c0dcd69c84c5370365153162b21fe82098459c3"
+  integrity sha512-gLlfEVjOgflWKWoB255GFMgvIkSv5ScVbCvkCGj6KDelFenqMuePnW3yqDvkSGl1xAds76NpqO+JgOuYq7gXMw==
   dependencies:
-    invariant "^2.1.0"
+    hex-to-rgba "^2.0.1"
 
 react-native-gesture-handler@~1.8.0:
   version "1.8.0"
@@ -5741,14 +5734,6 @@ react-native-screens@~2.15.2:
   version "2.15.2"
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.15.2.tgz#a449700e895b462937211ec72ed6f09652758f06"
   integrity sha512-CagNf2APXkVoRlF3Mugr264FbKbrBg9eXUkqhIPVeZB8EsdS8XPrnt99yj/pzmT+yJMBY0dGrjXT8+68WYh6YQ==
-
-react-native-user-avatar@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/react-native-user-avatar/-/react-native-user-avatar-1.0.7.tgz#be7a3912e3babad8780c8b83cff9a7e14d15cff7"
-  integrity sha512-ROWoH0yqHbs6yc5hruEI5n0yjpnw5fNAiEwTiVHbqOSPsgKU4Zwy+Ftr/8EaFzIrVRqxY7QXXZY/EWUll1YY+Q==
-  dependencies:
-    initials "^3.0.1"
-    prop-types "^15.7.2"
 
 react-native-web@~0.13.12:
   version "0.13.18"

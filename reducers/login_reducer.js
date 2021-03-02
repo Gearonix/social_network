@@ -80,10 +80,13 @@ export const getAuth = createAsyncThunk('GET_COOKIE',
 
 export const changeUserAvatar = createAsyncThunk('CHANGE_USER_AVATAR',
     async (data, {dispatch}) => {
+        console.log('CHANGE_USER_AVATAR')
+        console.log(data)
         const {result,user_id,old_file_name,mode} = data
         if (!result){
-            await API.setAvatar(user_id , null , old_file_name)
-            dispatch(changeImageAC(null))
+            await API.setAvatar(user_id , null , old_file_name,mode)
+            const callback = mode==='user_avatars' ? changeImageAC : changeBackgroundAC
+            dispatch(callback(null))
             return
         }
         const uri = result.uri;
@@ -98,7 +101,7 @@ export const changeUserAvatar = createAsyncThunk('CHANGE_USER_AVATAR',
         }
         const filename = response.data.data
         await API.setAvatar(user_id, filename,old_file_name,mode)
-        const callback = mode=='user_avatars' ? changeImageAC : changeBackgroundAC
+        const callback = mode==='user_avatars' ? changeImageAC : changeBackgroundAC
         dispatch(callback(filename))
     }
 )

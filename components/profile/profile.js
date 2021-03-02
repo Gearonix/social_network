@@ -29,10 +29,9 @@ const Profile = ({navigation}) => {
         dispatch(changeUserAvatar({result,user_id,avatar_path,mode}))
     };
     //todo : add preloader
-    const qwe = avatar_path ? ["Cancel","Change photo", "Delete photo"] : ["Cancel", "Change photo"]
-    const openActionSheet = Platform.OS!=='web' ? (mode,actionOptions = qwe) =>
+    const openActionSheet = Platform.OS!=='web' ? (mode,actionOptions =  ["Cancel","Change photo", "Delete photo"]) =>
         ActionSheetIOS.showActionSheetWithOptions({
-            options: qwe, cancelButtonIndex: 0,
+            options: actionOptions, cancelButtonIndex: 0,
             userInterfaceStyle: 'dark'
         }, index => {
             const callback = index===1 ? () => pickImage(mode) : () => pickImage(mode,true)
@@ -52,7 +51,7 @@ const Profile = ({navigation}) => {
         <AddPostInput />
         <Posts />
         </Container>
-        <Navbar />
+        <Navbar navigate={navigation.navigate}/>
     </Page>
 }
 const friends_data =  [

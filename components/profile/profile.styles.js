@@ -7,6 +7,11 @@ export const BackgroundImage = styled.Image`
   left: 0;
   top: 0;
 `
+export const DefaultBackground = styled(BackgroundImage)`
+    background: #222222;
+
+`
+
 export const ArrowLeft = styled.View`
   position: absolute;
   top: 15px;
@@ -19,15 +24,14 @@ export const UserImageStyle = styled.Image`
   margin: 0 auto;
 `
 export const UserText = styled.Text`
-  font-size: 50px;
+  font-size: ${props => props.mini ? '17px' : '50px'};
   color : white;
-  
-
 `
 export const UserImageContainer = styled.TouchableOpacity`
-  width: 120px;
-  height: 120px;
+  width: ${props => props.mini ? '50px' : '120px'};
+  height: ${props => props.mini ? '50px' : '120px'};
   borderRadius: 100;
+  margin-left: ${props => props.mini ? '12px' : '0px'};
   display: flex;
   align-items: center;
   justify-content: center;

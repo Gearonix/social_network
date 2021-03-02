@@ -1,10 +1,9 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import login_reducer from "./reducers/login_reducer";
+import login from "./reducers/login_reducer";
+import users from "./reducers/users_reducer";
 import thunk from "redux-thunk";
 
-const reducers = combineReducers({
-    login : login_reducer
-})
+const reducers = combineReducers({login, users})
 const store = createStore(reducers,applyMiddleware(thunk))
 window.state = store.getState
 

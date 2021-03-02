@@ -2,12 +2,13 @@ import styled from 'styled-components/native';
 import React from 'react';
 import { AntDesign } from '@expo/vector-icons';
 
-const Navbar = () => {
+const Navbar = ({navigate}) => {
     return <Main>
         <Block>
         <Icon name={'home'}/>
+        <Icon name={'search1'} callback={() => navigate('Search')}/>
         <Icon name={'message1'}/>
-        <Icon name={'user'}/>
+        <Icon name={'user'} callback={() => navigate('Profile')}/>
         </Block>
     </Main>
 }
@@ -32,6 +33,6 @@ const Block = styled.View`
   margin-top: 10px;
 `
 
-const Icon = ({name}) => <AntDesign name={name} size={28} color="white" />
+const Icon = ({name,callback=()=>{}}) => <AntDesign onPress={callback} name={name} size={28} color="white" />
 
 export default Navbar

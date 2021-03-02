@@ -18,7 +18,7 @@ import {
     PostOthers,
     PostTitle,
     PostUserImage, UnderLine,
-    UserImageStyle, UserImageContainer, UserText
+    UserImageStyle, UserImageContainer, UserText, DefaultBackground
 } from "./profile.styles";
 
 import {View} from "react-native";
@@ -30,8 +30,9 @@ import {ActionSheetIOS,Platform} from "react-native";
 import {randomInteger} from "../../tools";
 
 export const Background = ({image}) => {
-    const path = image ? `${config.BASE_URL}/backgrounds/${image}` : 'https://html5css.ru/css/img_lights.jpg'
-    return <><BackgroundImage source={{uri  : path}}/>
+    const path =  `${config.BASE_URL}/backgrounds/${image}`
+    const element = image ? <BackgroundImage source={{uri  : path}}/> : <DefaultBackground as={View} />
+    return <>{element}
         <BackgroundImage as={View}>
             <ArrowLeft>
                 <CreateIcon icon={'arrowleft'}/>
@@ -72,15 +73,16 @@ export const UserImage = ({username, callback,image}) => {
         </UserImageContainer>
     </Margin0Auto>
 }
-export const DefaultUserAvatar = ({text,callback})  => {
+export const DefaultUserAvatar = ({text,callback=()=>{},mini=false})  => {
     const colors = ['#00d9ff', '#ed77df', '#57eb8b', '#e1eb57', '#f7a120']
     const [color,setColor] = useState(colors[0])
     useEffect(() => {
         setColor(colors[randomInteger(0,colors.length-1)])
     },[])
-    return <UserImageContainer color={color} onPress={callback}>
-        <UserText>{text.slice(0,2)}</UserText></UserImageContainer>
+    return <UserImageContainer color={color} onPress={callback} mini={mini}>
+        <UserText mini={mini}>{text.slice(0,2)}</UserText></UserImageContainer>
 }
+// export const DefaultBackground = () =>
 
 export const Friends = ({data}) => {
     const renderItem = (item) => {

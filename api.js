@@ -8,23 +8,28 @@ const instance = axios.create({
 
 const API = {
     login(data){
-        return instance.post('/login',data)
+        return instance.put('/auth/login',data)
     },
     register(data){
-        return instance.post('/register',data)
+        return instance.post('/auth/register',data)
     } ,
     getUserById(user_id){
-        return instance.post('/auth',{user_id})
+        return instance.put('/getuser',{user_id})
     },
     uploadAvatar(data,mode){
         console.log(mode)
-        return instance.post(`/upload/${mode}`,data)
+        return instance.post(`/users/upload/${mode}`,data)
     },
     setAvatar(user_id,filename,old_file_name,mode){
-        return instance.post('/setavatar', {user_id,filename,old_file_name,mode})
+        console.log('MODE')
+        console.log(mode)
+        return instance.put('/users/setavatar', {user_id,filename,old_file_name,mode})
     },
     setUserData(data){
-        return instance.post('/setuserdata',data)
+        return instance.put('/users/setuserdata',data)
+    },
+    search(value){
+        return instance.get(`/users?username=${value}`)
     }
 }
 

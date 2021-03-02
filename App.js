@@ -7,6 +7,7 @@ import {Provider} from "react-redux";
 import store from "./store";
 import EditProfileSettings from "./components/edit_profile_settings/edit_profile_settings";
 import EditProfile from "./components/edit_profile/edit_profile";
+import Search from "./components/search/search";
 
 const headerStyle = (title,options={}) => ({
     title,
@@ -21,7 +22,7 @@ const headerStyle = (title,options={}) => ({
         fontSize: options.fz ?? '20px',
         textAlign: options.ta ? 'left' : 'center',
     },
-    ...options.others
+    ...options.others,
 })
 
 
@@ -41,6 +42,10 @@ const AppNagigator = createStackNavigator({
     EditProfile : {
         screen : EditProfile,
         navigationOptions: headerStyle('Edit profile',{ta: true})
+    },
+    Search : {
+        screen: Search,
+        navigationOptions: headerStyle('Search',{others : {headerLeft : null,animationEnabled: false,}})
     }
 })
 

@@ -2,25 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="be63f78c-ebe9-4e2f-a5c9-6943f7071937" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/components/edit_profile/edit_profile.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/edit_profile/edit_profile.styles.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/edit_profile_settings/edit_profile_settings.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/edit_profile_settings/edit_profile_settings.styles.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/search/search.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/search/search.styles.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reducers/users_reducer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/login/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/login/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/edit_profile/edit_profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/edit_profile/edit_profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/edit_profile_settings/edit_profile_settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/edit_profile_settings/edit_profile_settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/others/navbar/navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/others/navbar/navbar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/profile/profile.items.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.items.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/profile/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/profile/profile.styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.styles.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/for_work/todo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/for_work/todo.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/global/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/global/styles.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reducers/login_reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/login_reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/validators.js" beforeDir="false" afterPath="$PROJECT_DIR$/validators.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,7 +93,12 @@
       <workItem from="1614489850793" duration="1567000" />
       <workItem from="1614509314033" duration="17899000" />
       <workItem from="1614576895254" duration="18532000" />
-      <workItem from="1614598246242" duration="10235000" />
+      <workItem from="1614598246242" duration="17172000" />
+      <workItem from="1614666372065" duration="2915000" />
+      <workItem from="1614669416171" duration="350000" />
+      <workItem from="1614670249061" duration="38000" />
+      <workItem from="1614670335449" duration="3151000" />
+      <workItem from="1614676677881" duration="5257000" />
     </task>
     <servers />
   </component>
