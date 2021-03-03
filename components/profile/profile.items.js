@@ -25,7 +25,7 @@ import {View} from "react-native";
 import {Button, Flex, Margin0Auto, Text} from "../../global/styles";
 import {AntDesign, Feather} from "@expo/vector-icons";
 import React,{useState,useEffect} from "react";
-import config from "../../config";
+import config from "../../config_";
 import {ActionSheetIOS,Platform} from "react-native";
 import {randomInteger} from "../../tools";
 

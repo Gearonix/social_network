@@ -14,7 +14,7 @@ import {AntDesign} from "@expo/vector-icons";
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {getUser, search, setFoundUsers} from "../../reducers/users_reducer";
-import config from "../../config";
+import config from "../../config_";
 import {DefaultUserAvatar} from "../profile/profile.items";
 
 const Search = ({navigation}) => {

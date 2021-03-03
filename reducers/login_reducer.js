@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import api from "../api";
 import API from "../api";
-import config from "../config";
+import config from "../config_";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {isWrong} from "../tools";
 const _TOKEN =  config._TOKEN

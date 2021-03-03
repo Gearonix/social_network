@@ -14,7 +14,7 @@ import {
 } from "./followers.styles";
 import {FullContainer} from "../../global/styles";
 import {splitArr, write} from "../../tools";
-import config from "../../config";
+import config from "../../config_";
 import {DefaultUserAvatar} from "../profile/profile.items";
 
 const Followers = ({navigation}) => {
