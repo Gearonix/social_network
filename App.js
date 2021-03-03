@@ -8,6 +8,7 @@ import store from "./store";
 import EditProfileSettings from "./components/edit_profile_settings/edit_profile_settings";
 import EditProfile from "./components/edit_profile/edit_profile";
 import Search from "./components/search/search";
+import Followers from "./components/followers/followers";
 
 const headerStyle = (title,options={}) => ({
     title,
@@ -46,6 +47,10 @@ const AppNagigator = createStackNavigator({
     Search : {
         screen: Search,
         navigationOptions: headerStyle('Search',{others : {headerLeft : null,animationEnabled: false,}})
+    },
+    Followers : {
+        screen : Followers,
+        navigationOptions: headerStyle('Followers')
     }
 })
 

@@ -17,21 +17,45 @@ app.use(cors(cors_options))
 app.use(cookieparser())
 app.use(express.static('static'));
 
+const main = async () => {
+    const URI = 'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false'
+    const client = new MongoClient(URI);
+    try {
+        await client.connect();
+        return client
+    } catch (err) {
+        console.log(err)
+    }
+}
+let db;
+main().then((response) => {
+    db = response.db('network')
+})
+
 
 app.put('/getuser', (req, res) => {
-    db.collection('users').find({_id: new ObjectId(req.body.user_id)},
+    const {user_id, current_user_id} = req.body
+    db.collection('users').find({_id: new ObjectId(user_id)},
         {projection: {password: 0}}).toArray((err, result) => {
         if (err) {
             res.json(error(err))
             return
         }
-        res.json(ok(result[0]))
+        db.collection('followings').find({follow_to: user_id}).count((err, result_another) => {
+            if (current_user_id) {
+                db.collection('followings').find({follow_to: user_id, subscriber: current_user_id})
+                    .toArray((err, isSubscribed) => {res.json(ok({...result[0],
+                        followers_count: result_another, subscribed : isSubscribed.length>0}))})
+                return
+            }
+            res.json(ok({...result[0], followers_count: result_another}))
+        })
     })
 })
 
 app.get('/users', (req, res) => {
     const username = req.query.username
-    db.collection('users').find({username : {$regex:`.*${username}.*`}}, {
+    db.collection('users').find({username: {$regex: `.*${username}.*`}}, {
         projection: {
             password: 0, background_path: 0, online: 0,
             followers_count: 0
@@ -95,20 +119,6 @@ app.put('/users/setuserdata', (req, res) => {
     res.json(ok())
 })
 
-const main = async () => {
-    const URI = 'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false'
-    const client = new MongoClient(URI);
-    try {
-        await client.connect();
-        return client
-    } catch (err) {
-        console.log(err)
-    }
-}
-let db;
-main().then((response) => {
-    db = response.db('network')
-})
 
 const error = (status = 500, message = 'Request Error', data = {}) => ({status, message, data})
 const ok = (data = {}) => ({status: 200, message: 'OK', data})
@@ -120,14 +130,18 @@ app.put('/auth/login', (req, res) => {
             res.json(error(404, 'User not found'))
             return
         }
-        res.cookie('id', result[0]._id)
-        res.json(ok(result[0]))
+        const id = result[0]._id
+        res.cookie('id', id)
+        db.collection('followings').find({follow_to: id.toString()}).count((err, followers_count) => {
+            res.json(ok({...result[0], followers_count}))
+        })
     })
 })
+
 app.post('/auth/register', (req, res) => {
     const {username, password} = req.body
     const req_data = {
-        username, password, description: null, online: false, avatar_path: null, followers_count: 0,
+        username, password, description: null, online: false, avatar_path: null,
         background_path: null
     }
     db.collection('users').find({username}).toArray((err, result) => {
@@ -141,10 +155,50 @@ app.post('/auth/register', (req, res) => {
                 return
             }
             res.cookie('id', result.ops[0]._id)
-            res.json(ok(result.ops[0]))
+            res.json({...result.ops[0], followers_count: 0})
         })
     })
-
 })
+
+app.post('/users/follow', (req, res) => {
+    const {user_id, follow_to} = req.body
+    db.collection('users').find({_id: new ObjectId(user_id)}, {
+        projection: {
+            password: 0,
+            background_path: 0, followers_count: 0,
+        }
+    }).toArray((err, result) => {
+        if (err) {
+            console.log(err)
+            res.json(error(err));
+            return
+        }
+        delete result[0]._id
+        db.collection('followings').insertOne({...result[0], follow_to,subscriber:user_id}, (err, result) => {
+            res.json(ok())
+        })
+    })
+})
+const check = (err,res) => {
+    if (err) {
+        console.log(err)
+        res.json(error(err));
+        return true
+    }
+}
+
+app.delete('/users/follow', (req, res) => {
+    const {user_id, follow_to} = req.body
+    db.collection('followings').deleteOne({subscriber : user_id, follow_to});
+    res.json(ok())
+})
+app.get('/followers/:id',(req,res) => {
+    const follow_to = req.params.id
+    db.collection('followings').find({follow_to}).toArray((err,result) => {
+        if (check(err,result)) return
+        res.json(ok(result))
+    })
+})
+
 
 app.listen(6868, () => console.log('server started at post 6868'))

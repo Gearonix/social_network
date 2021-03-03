@@ -18,7 +18,7 @@ import {
     PostOthers,
     PostTitle,
     PostUserImage, UnderLine,
-    UserImageStyle, UserImageContainer, UserText, DefaultBackground
+    UserImageStyle, UserImageContainer, UserText, DefaultBackground, FollowersCountContainer, FollowersCount
 } from "./profile.styles";
 
 import {View} from "react-native";
@@ -29,12 +29,12 @@ import config from "../../config";
 import {ActionSheetIOS,Platform} from "react-native";
 import {randomInteger} from "../../tools";
 
-export const Background = ({image}) => {
+export const Background = ({image,nav}) => {
     const path =  `${config.BASE_URL}/backgrounds/${image}`
     const element = image ? <BackgroundImage source={{uri  : path}}/> : <DefaultBackground as={View} />
     return <>{element}
         <BackgroundImage as={View}>
-            <ArrowLeft>
+            <ArrowLeft onPress={nav.goBack}>
                 <CreateIcon icon={'arrowleft'}/>
             </ArrowLeft>
         </BackgroundImage></>
@@ -49,11 +49,18 @@ export const EditProfile = ({callback}) => {
     </Margin0Auto>
 }
 
-export const FollowButtons = () => {
+export const FollowersC = ({count,callback}) => {
+    return <FollowersCountContainer onPress={count!==0 ? callback : ()=>{}}>
+        <FollowersCount count={count}>
+            {count} followers</FollowersCount>
+    </FollowersCountContainer>
+}
+
+export const FollowButtons = ({callback,subscribed}) => {
     return <Margin0Auto mt={'22px'} mb={'19px'}>
         <FollowButtonContainer>
-            <Button background={'#5458F7'} width={'110px'} height={'32px'}>
-                <Text>Follow</Text>
+            <Button background={'#5458F7'} width={'110px'} height={'32px'} onPress={callback}>
+                <Text>{!subscribed ? 'Follow' : 'Unfollow'}</Text>
             </Button>
             <Button width={'50px'} height={'32px'}
                     background={'#525252'}>
@@ -66,21 +73,22 @@ export const UserImage = ({username, callback,image}) => {
     const src = `${config.BASE_URL}/user_avatars/${image}`
     const avatar = image ?
         <UserImageStyle source={{uri: src}}/> :
-        <DefaultUserAvatar text={username ?? 'User'} callback={() => callback('user_avatars')} />
+        <DefaultUserAvatar text={username ?? 'User'} callback={() => callback('user_avatars')}
+        size={'120px'} textSize={'50px'}/>
     return <Margin0Auto mt={'60px'}>
         <UserImageContainer onPress={() => callback('user_avatars')}>
             {avatar}
         </UserImageContainer>
     </Margin0Auto>
 }
-export const DefaultUserAvatar = ({text,callback=()=>{},mini=false})  => {
+export const DefaultUserAvatar = ({text,callback=()=>{},size,textSize})  => {
     const colors = ['#00d9ff', '#ed77df', '#57eb8b', '#e1eb57', '#f7a120']
     const [color,setColor] = useState(colors[0])
     useEffect(() => {
         setColor(colors[randomInteger(0,colors.length-1)])
     },[])
-    return <UserImageContainer color={color} onPress={callback} mini={mini}>
-        <UserText mini={mini}>{text.slice(0,2)}</UserText></UserImageContainer>
+    return <UserImageContainer color={color} onPress={callback} size={size}>
+        <UserText size={textSize}>{text.slice(0,2)}</UserText></UserImageContainer>
 }
 // export const DefaultBackground = () =>
 

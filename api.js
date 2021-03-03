@@ -13,16 +13,13 @@ const API = {
     register(data){
         return instance.post('/auth/register',data)
     } ,
-    getUserById(user_id){
-        return instance.put('/getuser',{user_id})
+    getUserById(user_id,current_user_id=null){
+        return instance.put('/getuser',{user_id,current_user_id})
     },
     uploadAvatar(data,mode){
-        console.log(mode)
         return instance.post(`/users/upload/${mode}`,data)
     },
     setAvatar(user_id,filename,old_file_name,mode){
-        console.log('MODE')
-        console.log(mode)
         return instance.put('/users/setavatar', {user_id,filename,old_file_name,mode})
     },
     setUserData(data){
@@ -30,6 +27,15 @@ const API = {
     },
     search(value){
         return instance.get(`/users?username=${value}`)
+    },
+    follow(user_id,follow_to){
+        return instance.post('/users/follow',{user_id,follow_to})
+    },
+    unfollow(user_id,follow_to){
+        return instance.delete('/users/follow',{data : {user_id,follow_to}})
+    },
+    getFollowers(user_id){
+        return instance.get(`/followers/${user_id}`)
     }
 }
 

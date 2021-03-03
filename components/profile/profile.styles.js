@@ -24,14 +24,14 @@ export const UserImageStyle = styled.Image`
   margin: 0 auto;
 `
 export const UserText = styled.Text`
-  font-size: ${props => props.mini ? '17px' : '50px'};
+  font-size: ${props => props.size};
   color : white;
 `
 export const UserImageContainer = styled.TouchableOpacity`
-  width: ${props => props.mini ? '50px' : '120px'};
-  height: ${props => props.mini ? '50px' : '120px'};
+  width: ${props => props.size};
+  height: ${props => props.size};
   borderRadius: 100;
-  margin-left: ${props => props.mini ? '12px' : '0px'};
+  margin-left: ${props => props.size==='45px' ? '12px' : '0px'};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,11 +50,14 @@ export const UserName = styled.Text`
   font-size: 28px;
   color: white;
 `
+export const FollowersCountContainer = styled.TouchableOpacity`
+  margin: 0 auto;
+  margin-top: 10px;
+`
 export const FollowersCount = styled.Text`
-  color: #c4c4c4;
+  color: ${props => props.count===0 ? '#737373' : '#c4c4c4'};
   text-align: center;
   font-size: 18px;
-  margin-top: 10px;
 `
 export const FriendsBlock = styled.View`
   height: 152px;
@@ -218,5 +221,5 @@ export const Description = styled.Text`
   color : rgba(204, 204, 204, 1);
   font-size: 18px;
   text-align: center;
-
+  margin-bottom: ${props => !props.iou ? '16px' : '0px'};
 `

@@ -2,25 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="be63f78c-ebe9-4e2f-a5c9-6943f7071937" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/components/search/search.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/search/search.styles.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reducers/users_reducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/followers/followers.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/followers/followers.styles.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/edit_profile/edit_profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/edit_profile/edit_profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/edit_profile_settings/edit_profile_settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/edit_profile_settings/edit_profile_settings.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/others/navbar/navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/others/navbar/navbar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/profile/profile.items.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.items.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/profile/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/profile/profile.styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/search/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/search/search.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/for_work/todo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/for_work/todo.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reducers/login_reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/login_reducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/validators.js" beforeDir="false" afterPath="$PROJECT_DIR$/validators.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reducers/users_reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/users_reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools.js" beforeDir="false" afterPath="$PROJECT_DIR$/tools.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +46,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../React/project" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
@@ -98,7 +95,9 @@
       <workItem from="1614669416171" duration="350000" />
       <workItem from="1614670249061" duration="38000" />
       <workItem from="1614670335449" duration="3151000" />
-      <workItem from="1614676677881" duration="5257000" />
+      <workItem from="1614676677881" duration="16174000" />
+      <workItem from="1614705118637" duration="4275000" />
+      <workItem from="1614750628732" duration="5878000" />
     </task>
     <servers />
   </component>

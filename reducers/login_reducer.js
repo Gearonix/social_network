@@ -107,7 +107,9 @@ export const changeUserAvatar = createAsyncThunk('CHANGE_USER_AVATAR',
 )
 export const changeUserData = createAsyncThunk('CHANGE_USER_DATA',
     async (data,{dispatch}) => {
+    debugger
         const response = await api.setUserData(data);
+    debugger
         console.log(response)
         dispatch(changeUserDataAC(data))
     }
