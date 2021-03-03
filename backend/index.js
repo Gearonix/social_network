@@ -6,10 +6,39 @@ const cookieparser = require('cookie-parser');
 const multer = require('multer');
 const {v4: create_id} = require('uuid');
 const fs = require('fs');
-
+const server = require('http').Server(app)
 const cors_options = {
     origin: 'http://localhost:19006',
     credentials: true
+}
+const io = require('socket.io')(server, {cors: cors_options})
+
+const online_users = []
+
+io.on('connection', (socket) => {
+    socket.on('ONLINE', ({user_id}) => {
+        if (find_idx(user => user?.user_id === user_id) !== -1) return
+        online_users.push({user_id, socket_id: socket.id})
+        socket.to(user_id).emit('user', {online: true});
+    })
+    socket.on('disconnect', () => {
+        const index = online_users.findIndex(user => user?.socket_id === socket.id)
+        if (index !== -1) {
+            socket.to(online_users[index]?.user_id).emit('user', {online: false})
+        }
+        delete online_users[index]
+    })
+    socket.on('follow_user', ({user_id}) => {
+        socket.join(user_id);
+        const index = find_idx(user => user?.user_id === user_id)
+        socket.emit('user', {online: index !== -1})
+    })
+    socket.on('unfollow_user', ({user_id}) => {
+        socket.leave(user_id)
+    })
+})
+const find_idx = (func) => {
+    return online_users.findIndex(func)
 }
 
 app.use(express.json())
@@ -41,14 +70,21 @@ app.put('/getuser', (req, res) => {
             res.json(error(err))
             return
         }
-        db.collection('followings').find({follow_to: user_id}).count((err, result_another) => {
-            if (current_user_id) {
-                db.collection('followings').find({follow_to: user_id, subscriber: current_user_id})
-                    .toArray((err, isSubscribed) => {res.json(ok({...result[0],
-                        followers_count: result_another, subscribed : isSubscribed.length>0}))})
-                return
-            }
-            res.json(ok({...result[0], followers_count: result_another}))
+        db.collection('followings').find({follow_to: user_id}).count((err, followers_count) => {
+            db.collection('posts').find({creator_id:user_id}).toArray((err,posts) => {
+                if (current_user_id) {
+                    db.collection('followings').find({follow_to: user_id, subscriber: current_user_id})
+                        .toArray((err, isSubscribed) => {
+                            res.json(ok({
+                                ...result[0],
+                                followers_count, subscribed: isSubscribed.length > 0,
+                                posts
+                            }))
+                        })
+                    return
+                }
+                res.json(ok({...result[0], followers_count,posts}))
+            })
         })
     })
 })
@@ -57,8 +93,7 @@ app.get('/users', (req, res) => {
     const username = req.query.username
     db.collection('users').find({username: {$regex: `.*${username}.*`}}, {
         projection: {
-            password: 0, background_path: 0, online: 0,
-            followers_count: 0
+            password: 0, background_path: 0
         }
     }).toArray((err, result) => {
         if (err) {
@@ -83,7 +118,7 @@ const fileFilter = function (req, file, cb) {
 }
 
 
-app.post('/users/upload/:mode', (req, res) => {
+app.post('/upload/:mode', (req, res) => {
     const upload = multer({storage: user_avatars_storage, fileFilter}).single('image')
     upload(req, res, (err) => {
         if (err) {
@@ -100,7 +135,6 @@ app.put('/users/setavatar', (req, res) => {
     const {user_id, filename, old_file_name, mode} = req.body
     replace_object = {}
     replace_object[mode == 'user_avatars' ? 'avatar_path' : 'background_path'] = filename
-    console.log(mode)
     db.collection('users').updateOne({_id: new ObjectId(user_id)}, {$set: replace_object})
     if (old_file_name) {
         try {
@@ -133,7 +167,9 @@ app.put('/auth/login', (req, res) => {
         const id = result[0]._id
         res.cookie('id', id)
         db.collection('followings').find({follow_to: id.toString()}).count((err, followers_count) => {
-            res.json(ok({...result[0], followers_count}))
+            db.collection('posts').find({creator_id: id.toString()}).toArray((err,posts) => {
+                res.json(ok({...result[0], followers_count,posts}))
+            })
         })
     })
 })
@@ -141,7 +177,7 @@ app.put('/auth/login', (req, res) => {
 app.post('/auth/register', (req, res) => {
     const {username, password} = req.body
     const req_data = {
-        username, password, description: null, online: false, avatar_path: null,
+        username, password, description: null, avatar_path: null,
         background_path: null
     }
     db.collection('users').find({username}).toArray((err, result) => {
@@ -155,7 +191,7 @@ app.post('/auth/register', (req, res) => {
                 return
             }
             res.cookie('id', result.ops[0]._id)
-            res.json({...result.ops[0], followers_count: 0})
+            res.json({...result.ops[0], followers_count: 0,posts:[]})
         })
     })
 })
@@ -174,12 +210,12 @@ app.post('/users/follow', (req, res) => {
             return
         }
         delete result[0]._id
-        db.collection('followings').insertOne({...result[0], follow_to,subscriber:user_id}, (err, result) => {
+        db.collection('followings').insertOne({...result[0], follow_to, subscriber: user_id}, (err, result) => {
             res.json(ok())
         })
     })
 })
-const check = (err,res) => {
+const check = (err, res) => {
     if (err) {
         console.log(err)
         res.json(error(err));
@@ -189,16 +225,52 @@ const check = (err,res) => {
 
 app.delete('/users/follow', (req, res) => {
     const {user_id, follow_to} = req.body
-    db.collection('followings').deleteOne({subscriber : user_id, follow_to});
+    db.collection('followings').deleteOne({subscriber: user_id, follow_to});
     res.json(ok())
 })
-app.get('/followers/:id',(req,res) => {
+app.get('/followers/:id', (req, res) => {
     const follow_to = req.params.id
-    db.collection('followings').find({follow_to}).toArray((err,result) => {
-        if (check(err,result)) return
+    db.collection('followings').find({follow_to}).toArray((err, result) => {
+        if (check(err, result)) return
         res.json(ok(result))
     })
 })
 
+app.post('/addpost', (req, res) => {
+    const {user_id, username, avatar_path,filename,value} = req.body;
+    const data = {
+        creator_name: username,
+        creator_avatar_path: avatar_path,
+        creator_id: user_id,
+        message : value,
+        full_date: {
+            date : getDate(),
+            time : getTime()
+        },
+        image_path: filename
+    }
+    db.collection('posts').insertOne(data,(err,result) =>{
+        if (check(err,result)) return
+        res.json(ok(result.ops[0]))
+    })
+})
 
-app.listen(6868, () => console.log('server started at post 6868'))
+
+const getTime = () => {
+    let date = new Date()
+    const hoursS = (date.getHours() < 10) ? '0' + date.getHours() : date.getHours()
+    const minutes = (date.getMinutes() < 10) ? '0' + date.getMinutes() : date.getMinutes()
+    return hoursS + ':' + minutes
+}
+const getDate = () => {
+    let d = new Date(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+    return [year, month, day].join('-');
+}
+server.listen(6868, () => console.log('server started at post 6868'))

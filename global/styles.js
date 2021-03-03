@@ -50,6 +50,7 @@ export const Page = styled.View`
   width: 100%;
   height: ${Dimensions.get('window').height-50+'px'};
   background: rgba(25, 26, 29, 1);
+  position: relative;
 
 `
 export const FullContainer = styled(Container)`

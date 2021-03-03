@@ -12,9 +12,10 @@ export const DefaultBackground = styled(BackgroundImage)`
 
 `
 
-export const ArrowLeft = styled.View`
+export const ArrowLeft = styled.TouchableOpacity`
   position: absolute;
   top: 15px;
+  z-index: 1;
   left: 15px;
 `
 export const UserImageStyle = styled.Image`
@@ -30,6 +31,7 @@ export const UserText = styled.Text`
 export const UserImageContainer = styled.TouchableOpacity`
   width: ${props => props.size};
   height: ${props => props.size};
+  position: relative;
   borderRadius: 100;
   margin-left: ${props => props.size==='45px' ? '12px' : '0px'};
   display: flex;
@@ -92,7 +94,7 @@ export const FriendsContainer = styled.ScrollView`
   flex: 1;
   height: 100%;
 `
-export const AddPostContainer = styled.View`
+export const AddPostContainer = styled.TouchableOpacity`
   width: 95%;
   margin: 0 auto;
   display: flex;
@@ -222,4 +224,14 @@ export const Description = styled.Text`
   font-size: 18px;
   text-align: center;
   margin-bottom: ${props => !props.iou ? '16px' : '0px'};
+`
+export const OnlineCircle = styled.View`
+  borderRadius: 100;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  right: 10px;
+  background : #2CE928;
+  bottom: 10px;
+  border: 3px solid white;
 `

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import config from "./config_";
+import config from "./config__";
 
 const instance = axios.create({
     baseURL : config.BASE_URL,
@@ -17,7 +17,7 @@ const API = {
         return instance.put('/getuser',{user_id,current_user_id})
     },
     uploadAvatar(data,mode){
-        return instance.post(`/users/upload/${mode}`,data)
+        return instance.post(`/upload/${mode}`,data)
     },
     setAvatar(user_id,filename,old_file_name,mode){
         return instance.put('/users/setavatar', {user_id,filename,old_file_name,mode})
@@ -36,6 +36,9 @@ const API = {
     },
     getFollowers(user_id){
         return instance.get(`/followers/${user_id}`)
+    },
+    addPost(data){
+        return instance.post('/addpost',data)
     }
 }
 

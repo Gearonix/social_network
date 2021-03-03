@@ -27,8 +27,8 @@ export const UserName = styled.Text`
   font-size: 16px;
 `
 export const Button = styled.TouchableOpacity`
-  width: 80px;
-  height: 24px;
+  width: 90px;
+  height: 30px;
   background: ${props => props.destroy ? '#90939D' : '#5458F7'};
   border-radius: 48px;
   margin: 0 auto;

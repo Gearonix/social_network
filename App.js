@@ -20,7 +20,7 @@ const headerStyle = (title,options={}) => ({
     headerTintColor: options.color ?? "white",
     headerTitleStyle: {
         fontWeight: 'normal',
-        fontSize: options.fz ?? '20px',
+        fontSize: options.fz ?? 20,
         textAlign: options.ta ? 'left' : 'center',
     },
     ...options.others,
@@ -50,12 +50,14 @@ const AppNagigator = createStackNavigator({
     },
     Followers : {
         screen : Followers,
-        navigationOptions: headerStyle('Followers')
+        navigationOptions: headerStyle('Followers',{ta : true})
     }
 })
 
 
 const AppNavigation = createAppContainer(AppNagigator)
+
+
 
 const App = () => {
     return <Provider store={store}>

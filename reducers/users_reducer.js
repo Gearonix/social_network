@@ -12,7 +12,8 @@ const initialState = {
         online: null,
         background_path: null,
         user_id: null,
-        subscribed: false
+        subscribed: false,
+        posts : []
     },
     followers: [],
     followers_loading : false
@@ -28,12 +29,12 @@ const reducer = createSlice({
         setCurrentUser(state, action) {
             const {
                 username, description, avatar_path, followers_count,
-                background_path, _id, online, subscribed
+                background_path, _id, online, subscribed,posts
             } = action.payload
             return {
                 ...state, current: {
                     ...state.current, username, description, avatar_path, followers_count,
-                    user_id: _id, background_path, online, subscribed
+                    user_id: _id, background_path, online, subscribed,posts
                 }
             }
         },

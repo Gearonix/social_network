@@ -2,14 +2,15 @@ import React from 'react'
 import {FullContainer} from "../../global/styles";
 import { FontAwesome5 } from '@expo/vector-icons';
 import {Item, Text} from "./edit_profile_settings.styles";
-import {useSelector} from "react-redux";
+import {changeBackgroundAC, changeUseraAvatarAC} from "../../reducers/login_reducer";
 const EditProfileSettings = ({navigation}) => {
     const userAvatarCallback = navigation.state.params.userAvatarCallback
     const actionOptions = ["Cancel","Change background", "Delete background"]
     return <FullContainer>
         <SetItem text={'Name and description'} callback={() => navigation.navigate('EditProfile')}/>
-        <SetItem text={'Background'} callback={() => userAvatarCallback('backgrounds',actionOptions)}/>
-        <SetItem text={'Avatar'} callback={() => userAvatarCallback('user_avatars')}/>
+        <SetItem text={'Background'} callback={() => userAvatarCallback('backgrounds',
+            changeBackgroundAC,actionOptions)}/>
+        <SetItem text={'Avatar'} callback={() => userAvatarCallback('user_avatars',changeUseraAvatarAC)}/>
     </FullContainer>
 }
 const SetItem = ({callback,text}) =>
