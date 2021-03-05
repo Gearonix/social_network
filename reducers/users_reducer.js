@@ -51,12 +51,27 @@ const reducer = createSlice({
         },
         setFollowLoading(state,action){
             return {...state,followers_loading: action.payload}
+        },
+        setCommentsCount(state,action){
+            return {...state,current : {...state.current,posts :
+                        state.current.posts.map(item => item._id===action.payload ? {...item,
+                    comments : item.comments+1} : item)}}
+        },
+        unlikePostAC(state, action) {
+            const e = item => ({...item, liked: item.liked.filter(item => item.user_id!==action.payload)})
+            return {...state,current : {...state.current,posts : state.current.posts.map(item => e(item))}}
+        },
+        likePostAC(state,action){
+            const {avatar_path, user_id, username,post_id} = action.payload
+            const e = item => item._id===post_id ? {...item,liked : [...item.liked,{avatar_path, user_id, username}]} :
+                item
+            return {...state,current : {...state.current,posts : state.current.posts.map(item => e(item))}}
         }
     }
 
 })
 export const {setFoundUsers, setCurrentUser, toggleFollow, clearCurrent, setFollowers,
-    setFollowLoading} = reducer.actions
+    setFollowLoading,setCommentsCount,unlikePostAC,likePostAC} = reducer.actions
 
 export const search = createAsyncThunk('SEARCH_USERS',
     async (value, {dispatch}) => {
@@ -101,5 +116,18 @@ export const getFollowers = createAsyncThunk('GET_FOLLOWERS',
         dispatch(setFollowLoading(false))
     }
 )
-
+export const LikePost = createAsyncThunk('LIKE_POST',
+    async (post_id, {dispatch, getState}) => {
+        const {avatar_path, user_id, username} = getState().login
+        const data = {avatar_path, user_id, username, post_id}
+        await api.likePost(data)
+        dispatch(likePostAC(data))
+    }
+)
+export const UnLikePost = createAsyncThunk('UNLIKE_POST',
+    async (data, {dispatch}) => {
+        dispatch(unlikePostAC(data.user_id))
+        await api.unlikePost(data)
+    }
+)
 export default reducer.reducer

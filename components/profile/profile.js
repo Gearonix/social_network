@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react'
-import { Container, Page} from "../../global/styles";
+import {Container, NoneBlock, Page} from "../../global/styles";
 import {
     AddPostInput,
     Background,
@@ -19,7 +19,8 @@ import {ActionSheetIOS, Platform} from "react-native";
 import {clearCurrent, follow, unfollow} from "../../reducers/users_reducer";
 import socket from "../../socket";
 import AddPost from "../add_post/add_post";
-import {ForbiddenWeb} from "../../tools";
+import {ForbiddenWeb, write} from "../../tools";
+import {PageComments} from "../comments/comments.styles";
 
 const Profile = ({navigation}) => {
     const isOtherUser = navigation.state.params?.CURRENT_USER
@@ -100,14 +101,13 @@ const Profile = ({navigation}) => {
             {userAvatarCallback : openActionSheet})} />}
         <Friends data={friends_data}/>
         <AddPostInput callback={Platform.OS==='web' ? ForbiddenWeb : () => showPost(true)}/>
-        <Posts data={posts}/>
+        <Posts data={posts} nav={nav} isOther={isOtherUser} current_user_id={current_user_id}/>
+        <NoneBlock />
         </Container>
         <Navbar navigate={nav}/>
         <AddPost isOpen={addPost} qclose={() => showPost(false)}/>
     </Page>
 }
-
-
 
 
 const friends_data =  [

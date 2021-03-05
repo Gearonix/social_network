@@ -247,14 +247,27 @@ app.post('/addpost', (req, res) => {
             date : getDate(),
             time : getTime()
         },
-        image_path: filename
+        image_path: filename,
+        comments: 0,
+        liked : []
     }
     db.collection('posts').insertOne(data,(err,result) =>{
         if (check(err,result)) return
         res.json(ok(result.ops[0]))
     })
 })
-
+app.post('/posts/like',(req,res) => {
+    const {avatar_path,user_id,username,post_id} = req.body
+    db.collection('posts').update({_id : new ObjectId(post_id)},{$push :
+            {liked : {avatar_path,user_id,username}}})
+    res.json(ok())
+})
+app.delete('/posts/like',(req,res) => {
+    const {user_id,post_id} = req.body
+    db.collection('posts').update({_id : new ObjectId(post_id),"liked.user_id" : user_id},
+        {$pull : {liked : {user_id}}})
+    res.json(ok())
+})
 
 const getTime = () => {
     let date = new Date()
@@ -273,4 +286,27 @@ const getDate = () => {
         day = '0' + day;
     return [year, month, day].join('-');
 }
+
+app.post('/comments',(req,res) => {
+    db.collection('comments').insertOne({...req.body,time:getTime()},(err,result) => {
+        db.collection('posts').update({_id : new ObjectId(req.body.post_id)},{$inc : {comments : 1}})
+        if (check(err,res)) return
+        res.json(ok(result.ops[0]))
+    })
+})
+
+app.get('/comments/:id',(req,res) => {
+    const post_id = req.params.id;
+    db.collection('comments').find({post_id}).toArray((err,result) =>{
+        if (check(err,res)) return
+        res.json(ok(result))
+    })
+})
+
+app.get('/posts',(req,res) => {
+    db.collection('posts').find({}).toArray((err,result) => {
+        res.json(ok(result))
+    })
+})
+
 server.listen(6868, () => console.log('server started at post 6868'))

@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import api from "../api";
 import API from "../api";
-import config from "../config__";
+import config from "../config___";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {isWrong} from "../tools";
 
@@ -15,18 +15,20 @@ const initialState = {
     avatar_path: null,
     followers_count: null,
     background_path: null,
-    posts : []
+    posts: []
 }
 const reducer = createSlice({
     name: 'login',
     initialState,
     reducers: {
         loginAC(state, action) {
-            const {username, description, avatar_path, followers_count, background_path,
-                posts} = action.payload
+            const {
+                username, description, avatar_path, followers_count, background_path,
+                posts
+            } = action.payload
             return {
                 ...state, username, description, avatar_path, followers_count,
-                user_id: action.payload._id, background_path,posts
+                user_id: action.payload._id, background_path, posts
             }
         },
         changeUseraAvatarAC(state, action) {
@@ -41,13 +43,23 @@ const reducer = createSlice({
             const background_path = action.payload
             return {...state, background_path}
         },
-        addPostAC(state,action){
-            return {...state,posts:[...state.posts,action.payload]}
-        }
+        addPostAC(state, action) {
+            return {...state, posts: [...state.posts, action.payload]}
+        },
+        setCommentsCount(state, action) {
+            return {
+                ...state, posts: state.posts.map(item => item._id === action.payload ? {
+                    ...item,
+                    comments: item.comments + 1
+                } : item)
+            }
+        },
     }
 })
-export const {loginAC, changeUseraAvatarAC, changeUserDataAC, changeBackgroundAC,
-    addPostAC} = reducer.actions
+export const {
+    loginAC, changeUseraAvatarAC, changeUserDataAC, changeBackgroundAC,
+    addPostAC, setCommentsCount
+} = reducer.actions
 
 export const login = createAsyncThunk('LOGIN',
     async (data, {dispatch}) => {
@@ -111,11 +123,12 @@ export const changeUserData = createAsyncThunk('CHANGE_USER_DATA',
 )
 
 export const addPost = createAsyncThunk('ADD_POST',
-    async (data,{dispatch}) => {
+    async (data, {dispatch}) => {
         const response = await api.addPost(data);
         if (isWrong(response)) return
         dispatch(addPostAC(response.data.data))
     }
 )
+
 
 export default reducer.reducer

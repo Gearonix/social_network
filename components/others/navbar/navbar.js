@@ -5,7 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 const Navbar = ({navigate}) => {
     return <Main>
         <Block>
-        <Icon name={'home'} />
+        <Icon name={'home'} callback={() => navigate('Home')}/>
         <Icon name={'search1'} callback={() => navigate('Search')}/>
         <Icon name={'message1'}/>
         <Icon name={'user'} callback={() => navigate('Profile',{CURRENT_USER : false})}/>

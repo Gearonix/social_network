@@ -1,5 +1,5 @@
 import axios from 'axios'
-import config from "./config__";
+import config from "./config___";
 
 const instance = axios.create({
     baseURL : config.BASE_URL,
@@ -39,6 +39,18 @@ const API = {
     },
     addPost(data){
         return instance.post('/addpost',data)
+    },
+    getComments(id){
+        return instance.get(`/comments/${id}`)
+    },
+    addComment(data){
+        return instance.post('/comments',data)
+    },
+    likePost(data){
+        return instance.post('/posts/like',data)
+    },
+    unlikePost(data){
+        return instance.delete('/posts/like',{data})
     }
 }
 

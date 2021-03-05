@@ -14,10 +14,32 @@ import {
 } from "./followers.styles";
 import {FullContainer} from "../../global/styles";
 import {splitArr, write} from "../../tools";
-import config from "../../config__";
+import config from "../../config___";
 import {DefaultUserAvatar} from "../profile/profile.items";
 
-const Followers = ({navigation}) => {
+
+export const Liked = ({navigation}) => {
+    const {CURRENT_USER : isOtherUser,data} = navigation.state.params
+    const current_user_id = useSelector(state => state.login.user_id)
+    const dispatch = useDispatch()
+    const nav = (id) => async () => {
+        await dispatch(getUser({id, current_user_id}))
+        navigation.navigate('Profile', {CURRENT_USER: true})
+    }
+    return <Test current_user_id={current_user_id} data={data} callback={nav} item_id={'user_id'} />
+}
+const Test = ({data,callback,current_user_id,item_id})  => {
+    const elements = data.map(item => <Follower data={item} callback={callback(item[item_id])}
+                                                     destroy={item[item_id] === current_user_id}/>)
+    if (data.length % 2 !== 0) elements.push(<NoneUser/>)
+    return <FullContainer>
+        <FollowersContainer>
+            {elements}
+        </FollowersContainer>
+    </FullContainer>
+}
+
+const FollowersC = ({navigation}) => {
     const dispatch = useDispatch()
     const isOtherUser = navigation.state.params.CURRENT_USER
     const user_id = useSelector(state => isOtherUser ? state.users.current.user_id : state.login.user_id)
@@ -32,17 +54,9 @@ const Followers = ({navigation}) => {
         await dispatch(getUser({id, current_user_id}))
         navigation.navigate('Profile', {CURRENT_USER: true})
     }
-    // NoneUser
-    const elements = followers.map(item => <Follower data={item} callback={nav(item.subscriber)}
-                                                     destroy={item.subscriber === current_user_id}/>)
-    if (followers.length % 2 !== 0) elements.push(<NoneUser/>)
-    return <FullContainer>
-        <FollowersContainer>
-            {elements}
-        </FollowersContainer>
-
-    </FullContainer>
+    return <Test data={followers} callback={nav} current_user_id={current_user_id} item_id={'subscriber'}/>
 }
+
 
 const Follower = ({data, callback, destroy}) => {
     const {username, avatar_path} = data
@@ -58,4 +72,4 @@ const Follower = ({data, callback, destroy}) => {
 }
 
 
-export default Followers
+export default FollowersC

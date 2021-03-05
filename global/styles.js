@@ -48,10 +48,13 @@ export const Flex = styled.View`
 `
 export const Page = styled.View`
   width: 100%;
-  height: ${Dimensions.get('window').height-50+'px'};
+  height: ${Dimensions.get('window').height-60+'px'};;
   background: rgba(25, 26, 29, 1);
   position: relative;
-
+`
+export const NoneBlock = styled.View`
+  width: 100%;
+  height: 120px;
 `
 export const FullContainer = styled(Container)`
   height: 100%;

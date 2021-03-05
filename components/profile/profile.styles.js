@@ -31,9 +31,11 @@ export const UserText = styled.Text`
 export const UserImageContainer = styled.TouchableOpacity`
   width: ${props => props.size};
   height: ${props => props.size};
+  margin-top: ${props => props.mt || '0px'};
   position: relative;
   borderRadius: 100;
-  margin-left: ${props => props.size==='45px' ? '12px' : '0px'};
+  margin-left: ${props => props.size==='45px'  ? '12px' : props.size==='44px' ? '6px' :
+          props.size==='60px' ? '10px' : '0px'};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -170,7 +172,7 @@ export const ChosenBlock = styled.View`
   width: 100%;
   height: 85px;
 `
-export const PeopleWhoLikePost = styled.View`
+export const PeopleWhoLikePost = styled.TouchableOpacity`
   width: 113px;
   height: 42px;
   display: flex;
