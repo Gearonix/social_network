@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { colors } from '../../App';
 
 export const BackgroundImage = styled.Image`
   height: 120px;
@@ -9,7 +10,6 @@ export const BackgroundImage = styled.Image`
 `
 export const DefaultBackground = styled(BackgroundImage)`
     background: #222222;
-
 `
 
 export const ArrowLeft = styled.TouchableOpacity`

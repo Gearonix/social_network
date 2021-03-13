@@ -1,5 +1,9 @@
+import {nor} from "./types";
+
+type errT = {username?: boolean, error?: nor,password? : boolean}
+
 export const loginValidator = values => {
-    let errors = {};
+    let errors : errT = {}
     if (!values.username){
         errors.username = true
         errors.error = 'Username is required'
@@ -11,7 +15,7 @@ export const loginValidator = values => {
     return errors
 }
 export const registerValidator = values => {
-    let errors = {};
+    let errors  : errT=  {}
     if (!values.username){
         errors.username = true
         errors.error = 'Username is required'
@@ -32,7 +36,7 @@ export const registerValidator = values => {
     return errors
 }
 export const editProfileValidator = values => {
-    let errors = {};
+    let errors  : errT= {}
     if (!values.username){
         errors.username = true
         errors.error = 'Name is required'

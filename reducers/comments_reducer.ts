@@ -1,8 +1,9 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import api from "../api";
 import {isWrong} from "../tools";
+import {actionType, commentsType} from './../types'
 
-const initialState = {
+const initialState : commentsType = {
     comments: [],
     loading: false
 }
@@ -11,13 +12,13 @@ const reducer = createSlice({
     name: 'COMMENTS',
     initialState,
     reducers: {
-        setComments(state, action) {
+        setComments(state, action : actionType<Array<any>>) {
             return {...state, comments: action.payload}
         },
-        setLoading(state, action) {
+        setLoading(state, action : actionType<boolean>) {
             return {...state, loading: action.payload}
         },
-        addCommentAC(state,action){
+        addCommentAC(state,action : actionType<any>){
             return {...state, comments: [...state.comments,action.payload]}
         }
     }
@@ -25,7 +26,7 @@ const reducer = createSlice({
 export const {setComments, setLoading,addCommentAC} = reducer.actions
 
 export const getComments = createAsyncThunk('GET_COMMENTS',
-    async (id, {dispatch}) => {
+    async (id : string, {dispatch}) => {
         dispatch(setLoading(true))
         const response = await api.getComments(id);
         if (isWrong(response)) return
@@ -33,8 +34,10 @@ export const getComments = createAsyncThunk('GET_COMMENTS',
         dispatch(setLoading(false))
     }
 )
+type addCommentT = {message : string,user_id : string,avatar_path : string| null, username : string,post_id : string}
+
 export const addComment = createAsyncThunk('ADD_COMMENT',
-    async (data, {dispatch}) => {
+    async (data : addCommentT, {dispatch}) => {
         const response = await api.addComment(data)
         if (isWrong(response)) return
         dispatch(addCommentAC(response.data.data))

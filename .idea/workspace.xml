@@ -2,30 +2,48 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="be63f78c-ebe9-4e2f-a5c9-6943f7071937" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/components/comments/comments.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/comments/comments.styles.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/home/home.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reducers/comments_reducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/chat/chat.styles.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/chat/chat.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/chat_people/chatPeople.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reducers/messages_reducer.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/socket.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/followers/followers.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/followers/followers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/others/navbar/navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/others/navbar/navbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/profile/profile.items.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.items.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/profile/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/profile/profile.styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/search/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/search/search.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config__.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/babel.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/babel.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/add_post/add_post.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/add_post/add_post.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/add_post/add_post.styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/add_post/add_post.styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/comments/comments.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/comments/comments.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/comments/comments.styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/comments/comments.styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/edit_profile/edit_profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/edit_profile/edit_profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/edit_profile/edit_profile.styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/edit_profile/edit_profile.styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/edit_profile_settings/edit_profile_settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/edit_profile_settings/edit_profile_settings.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/edit_profile_settings/edit_profile_settings.styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/edit_profile_settings/edit_profile_settings.styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/followers/followers.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/followers/followers.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/followers/followers.styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/followers/followers.styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/home/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/home/home.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/login/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/login/login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/login/login.styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/login/login.styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/others/navbar/navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/others/navbar/navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/profile/profile.items.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.items.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/profile/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/profile/profile.styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/search/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/search/search.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/search/search.styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/search/search.styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config___.js" beforeDir="false" afterPath="$PROJECT_DIR$/config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/for_work/todo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/for_work/todo.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/global/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/global/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/global/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/global/styles.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reducers/login_reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/login_reducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reducers/users_reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/users_reducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/socket.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reducers/comments_reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/comments_reducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reducers/login_reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/login_reducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reducers/users_reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/users_reducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socket.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools.js" beforeDir="false" afterPath="$PROJECT_DIR$/tools.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/validators.js" beforeDir="false" afterPath="$PROJECT_DIR$/validators.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,6 +55,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -55,21 +74,23 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../React/Body_World" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="ts.external.directory.path" value="C:\Users\Егор\Desktop\Егор\html проэкты\html projects\React Native\my_startup\my_startup\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Егор\Desktop\Егор\html проэкты\html projects\React Native\my_startup\my_startup\components" />
       <recent name="C:\Users\Егор\Desktop\Егор\html проэкты\html projects\React Native\my_startup\my_startup\backend\static" />
       <recent name="C:\Users\Егор\Desktop\Егор\html проэкты\html projects\React Native\my_startup\my_startup\backend\static\user_avatars" />
       <recent name="C:\Users\Егор\Desktop\Егор\html проэкты\html projects\React Native\my_startup\my_startup\backend" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.index.js">
-    <configuration name="index.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/backend/index.js" working-dir="$PROJECT_DIR$/backend">
+  <component name="RunManager" selected="Node.js.index.ts">
+    <configuration name="index.ts" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/backend/index.ts" working-dir="$PROJECT_DIR$/backend">
       <method v="2" />
     </configuration>
     <configuration name="start" type="js.build_tools.npm" nameIsGenerated="true">
@@ -84,7 +105,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.index.js" />
+        <item itemvalue="Node.js.index.ts" />
       </list>
     </recent_temporary>
   </component>
@@ -111,6 +132,14 @@
       <workItem from="1614865132274" duration="8000" />
       <workItem from="1614865148270" duration="40000" />
       <workItem from="1614948901360" duration="10822000" />
+      <workItem from="1615026058807" duration="305000" />
+      <workItem from="1615026374153" duration="6821000" />
+      <workItem from="1615135409166" duration="7412000" />
+      <workItem from="1615188938995" duration="11000" />
+      <workItem from="1615191621966" duration="2413000" />
+      <workItem from="1615389395488" duration="2206000" />
+      <workItem from="1615405338711" duration="18000" />
+      <workItem from="1615621471081" duration="28042000" />
     </task>
     <servers />
   </component>

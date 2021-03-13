@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {Container, Page} from "../../global/styles";
 import Navbar from "../others/navbar/navbar";
 import {AddPostInput} from "../profile/profile.items";

@@ -1,15 +1,15 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import api from "../api";
 import {isWrong} from "../tools";
+import {actionType, nor, usersType} from './../types'
 
-const initialState = {
+const initialState : usersType = {
     found_users: [],
     current: {
         username: null,
         description: null,
         avatar_path: null,
         followers_count: null,
-        online: null,
         background_path: null,
         user_id: null,
         subscribed: false,
@@ -38,7 +38,7 @@ const reducer = createSlice({
                 }
             }
         },
-        toggleFollow(state, action) {
+        toggleFollow(state, action : actionType<boolean>) {
             const followers_count = action.payload ? state.current.followers_count + 1 :
                 state.current.followers_count - 1
             return {...state, current: {...state.current, subscribed: action.payload, followers_count}}
@@ -74,7 +74,7 @@ export const {setFoundUsers, setCurrentUser, toggleFollow, clearCurrent, setFoll
     setFollowLoading,setCommentsCount,unlikePostAC,likePostAC} = reducer.actions
 
 export const search = createAsyncThunk('SEARCH_USERS',
-    async (value, {dispatch}) => {
+    async (value : string, {dispatch}) => {
         if (!value) {
             dispatch(setFoundUsers([]))
             return
@@ -86,29 +86,38 @@ export const search = createAsyncThunk('SEARCH_USERS',
         console.log(response.data.data)
     }
 )
+type getUserT = {
+    id : nor
+    current_user_id : string
+}
 export const getUser = createAsyncThunk("GET_USER",
-    async ({id, current_user_id}, {dispatch}) => {
+    async ({id, current_user_id} : getUserT, {dispatch}) => {
         const response = await api.getUserById(id, current_user_id);
         dispatch(setCurrentUser(response.data.data))
         return response
     }
 )
+type followT = {
+    user_id : string,
+    follow_to : string
+}
 export const follow = createAsyncThunk('FOLLOW',
-    async (data, {dispatch}) => {
+    async (data : followT, {dispatch}) => {
         const {user_id, follow_to} = data;
         await api.follow(user_id, follow_to);
         dispatch(toggleFollow(true))
     }
 )
 export const unfollow = createAsyncThunk("UNFOLLOW",
-    async (data, {dispatch}) => {
+    async (data : followT, {dispatch}) => {
         const {user_id, follow_to} = data;
         await api.unfollow(user_id, follow_to);
         dispatch(toggleFollow(false))
     }
 )
+
 export const getFollowers = createAsyncThunk('GET_FOLLOWERS',
-    async (user_id, {dispatch}) => {
+    async (user_id : string, {dispatch}) => {
         dispatch(setFollowLoading(true))
         const response = await api.getFollowers(user_id);
         if (isWrong(response)) return
@@ -117,7 +126,8 @@ export const getFollowers = createAsyncThunk('GET_FOLLOWERS',
     }
 )
 export const LikePost = createAsyncThunk('LIKE_POST',
-    async (post_id, {dispatch, getState}) => {
+    async (post_id : string, {dispatch, getState}) => {
+        //@ts-ignore
         const {avatar_path, user_id, username} = getState().login
         const data = {avatar_path, user_id, username, post_id}
         await api.likePost(data)
@@ -125,7 +135,7 @@ export const LikePost = createAsyncThunk('LIKE_POST',
     }
 )
 export const UnLikePost = createAsyncThunk('UNLIKE_POST',
-    async (data, {dispatch}) => {
+    async (data : {user_id : string,post_id : string}, {dispatch}) => {
         dispatch(unlikePostAC(data.user_id))
         await api.unlikePost(data)
     }

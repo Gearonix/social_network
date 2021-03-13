@@ -1,27 +1,26 @@
 import {FullContainer} from "../../global/styles";
-import React, {useState, useEffect} from 'react';
+import * as React from 'react';
 import {useFormik} from "formik";
 import {ButtonText, Image, Input, Link, Title, Button, Error} from "./login.styles";
 import {useDispatch, useSelector} from "react-redux";
 import {getAuth, login, register} from "../../reducers/login_reducer";
 import {loginValidator, registerValidator} from "../../validators";
-
+import {nor} from "../../types";
 
 const Login = ({navigation}) => {
     const isLogin = navigation.state.params?.MODE == 'LOGIN';
     const dispatch = useDispatch()
-    const [error, setError] = useState(null)
-    const user_id = useSelector(state => state.login.user_id)
+    const [error, setError] = React.useState(null)
+    const user_id : nor= useSelector(state => state.login.user_id)
     const initialValues = {username: '', password: ''}
     const callback = isLogin ? login : register
     const onSubmit = async data => {
         const {payload: Error} = await dispatch(callback(data))
         if (Error) setError(Error)
     }
-    useEffect(() => {
+    React.useEffect(() => {
         dispatch(getAuth())
     }, [])
-
     const formik = useFormik({initialValues, onSubmit, validate: isLogin ? loginValidator : registerValidator})
     if (user_id) {
         navigation.navigate('Profile')
@@ -39,7 +38,7 @@ const Login = ({navigation}) => {
     </FullContainer>
 }
 
-export const createInput = (name, formik,maxLength='20') => <Input onChangeText={formik.handleChange(name)} value={formik.values[name]}
+export const createInput = (name : string, formik,maxLength='20') => <Input onChangeText={formik.handleChange(name)} value={formik.values[name]}
                                              style={{paddingVertical: 0, outline: 'none'}}
                                              error={formik.errors[name]} maxLength={maxLength}/>
 export default Login

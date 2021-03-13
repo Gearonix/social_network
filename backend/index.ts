@@ -11,22 +11,31 @@ const cors_options = {
     origin: 'http://localhost:19006',
     credentials: true
 }
-const io = require('socket.io')(server, {cors: cors_options})
+var io = require('socket.io')(server, {cors: cors_options})
 
 const online_users = []
+const users = []
 
 io.on('connection', (socket) => {
     socket.on('ONLINE', ({user_id}) => {
         if (find_idx(user => user?.user_id === user_id) !== -1) return
-        online_users.push({user_id, socket_id: socket.id})
+        online_users.push({user_id, socket_id: socket.id});
+        users.push(`USERS/${user_id}`)
+        socket.join(`USERS/${user_id}`)
+        db.collection('rooms').find({users: {$elemMatch : {user_id}}}).toArray((err,result) => {
+            result.forEach(item => socket.join(item._id.toString()))
+            socket.emit('get_rooms',result)
+        })
         socket.to(user_id).emit('user', {online: true});
     })
     socket.on('disconnect', () => {
         const index = online_users.findIndex(user => user?.socket_id === socket.id)
+        const user_id = online_users[index]?.user_id
         if (index !== -1) {
-            socket.to(online_users[index]?.user_id).emit('user', {online: false})
+            socket.to(user_id).emit('user', {online: false})
         }
         delete online_users[index]
+        socket.leave(`USERS/${user_id}`)
     })
     socket.on('follow_user', ({user_id}) => {
         socket.join(user_id);
@@ -36,10 +45,29 @@ io.on('connection', (socket) => {
     socket.on('unfollow_user', ({user_id}) => {
         socket.leave(user_id)
     })
+    socket.on('init_room', ({receiver_id, user_id}) => {
+        const data = {users : [{user_id : receiver_id}, {user_id}]}
+        db.collection('rooms').update(data, data, {upsert: true})
+        db.collection('rooms').find(data).toArray((err,result) => {
+        if (err) {
+            console.log(err)
+            return
+        }
+        const room_id = result[0]?._id.toString()
+        socket.to(`USERS/${receiver_id}`).emit('enter_room',{room : result[0]})
+        })
+    })
+    socket.on('send_message',data => {
+        db.collection('messages').insertOne(data)
+        socket.to(data.room_id).emit('add_message',data)
+    })
+    socket.on('set_read', ({user_id,room_id}) => {
+        db.collection('messages').update({user_id : {$ne : user_id},room_id},{$set : {read : true}})
+        socket.to(room_id).emit('get_read',user_id)
+    })
 })
-const find_idx = (func) => {
-    return online_users.findIndex(func)
-}
+const find_idx = func => online_users.findIndex(func)
+
 
 app.use(express.json())
 app.use(cors(cors_options))
@@ -60,7 +88,10 @@ let db;
 main().then((response) => {
     db = response.db('network')
 })
-
+app.put('/messages',(req,res) => {
+    console.log(req.body.room_id)
+    db.collection('messages').find({room_id : req.body.room_id}).toArray((err,result) => res.json(ok(result)))
+})
 
 app.put('/getuser', (req, res) => {
     const {user_id, current_user_id} = req.body
@@ -71,7 +102,7 @@ app.put('/getuser', (req, res) => {
             return
         }
         db.collection('followings').find({follow_to: user_id}).count((err, followers_count) => {
-            db.collection('posts').find({creator_id:user_id}).toArray((err,posts) => {
+            db.collection('posts').find({creator_id: user_id}).toArray((err, posts) => {
                 if (current_user_id) {
                     db.collection('followings').find({follow_to: user_id, subscriber: current_user_id})
                         .toArray((err, isSubscribed) => {
@@ -83,7 +114,7 @@ app.put('/getuser', (req, res) => {
                         })
                     return
                 }
-                res.json(ok({...result[0], followers_count,posts}))
+                res.json(ok({...result[0], followers_count, posts}))
             })
         })
     })
@@ -133,7 +164,7 @@ app.post('/upload/:mode', (req, res) => {
 })
 app.put('/users/setavatar', (req, res) => {
     const {user_id, filename, old_file_name, mode} = req.body
-    replace_object = {}
+    const replace_object = {}
     replace_object[mode == 'user_avatars' ? 'avatar_path' : 'background_path'] = filename
     db.collection('users').updateOne({_id: new ObjectId(user_id)}, {$set: replace_object})
     if (old_file_name) {
@@ -167,8 +198,8 @@ app.put('/auth/login', (req, res) => {
         const id = result[0]._id
         res.cookie('id', id)
         db.collection('followings').find({follow_to: id.toString()}).count((err, followers_count) => {
-            db.collection('posts').find({creator_id: id.toString()}).toArray((err,posts) => {
-                res.json(ok({...result[0], followers_count,posts}))
+            db.collection('posts').find({creator_id: id.toString()}).toArray((err, posts) => {
+                res.json(ok({...result[0], followers_count, posts}))
             })
         })
     })
@@ -191,7 +222,7 @@ app.post('/auth/register', (req, res) => {
                 return
             }
             res.cookie('id', result.ops[0]._id)
-            res.json({...result.ops[0], followers_count: 0,posts:[]})
+            res.json({...result.ops[0], followers_count: 0, posts: []})
         })
     })
 })
@@ -237,35 +268,37 @@ app.get('/followers/:id', (req, res) => {
 })
 
 app.post('/addpost', (req, res) => {
-    const {user_id, username, avatar_path,filename,value} = req.body;
+    const {user_id, username, avatar_path, filename, value} = req.body;
     const data = {
         creator_name: username,
         creator_avatar_path: avatar_path,
         creator_id: user_id,
-        message : value,
+        message: value,
         full_date: {
-            date : getDate(),
-            time : getTime()
+            date: getDate(),
+            time: getTime()
         },
         image_path: filename,
         comments: 0,
-        liked : []
+        liked: []
     }
-    db.collection('posts').insertOne(data,(err,result) =>{
-        if (check(err,result)) return
+    db.collection('posts').insertOne(data, (err, result) => {
+        if (check(err, result)) return
         res.json(ok(result.ops[0]))
     })
 })
-app.post('/posts/like',(req,res) => {
-    const {avatar_path,user_id,username,post_id} = req.body
-    db.collection('posts').update({_id : new ObjectId(post_id)},{$push :
-            {liked : {avatar_path,user_id,username}}})
+app.post('/posts/like', (req, res) => {
+    const {avatar_path, user_id, username, post_id} = req.body
+    db.collection('posts').update({_id: new ObjectId(post_id)}, {
+        $push:
+            {liked: {avatar_path, user_id, username}}
+    })
     res.json(ok())
 })
-app.delete('/posts/like',(req,res) => {
-    const {user_id,post_id} = req.body
-    db.collection('posts').update({_id : new ObjectId(post_id),"liked.user_id" : user_id},
-        {$pull : {liked : {user_id}}})
+app.delete('/posts/like', (req, res) => {
+    const {user_id, post_id} = req.body
+    db.collection('posts').update({_id: new ObjectId(post_id), "liked.user_id": user_id},
+        {$pull: {liked: {user_id}}})
     res.json(ok())
 })
 
@@ -287,26 +320,26 @@ const getDate = () => {
     return [year, month, day].join('-');
 }
 
-app.post('/comments',(req,res) => {
-    db.collection('comments').insertOne({...req.body,time:getTime()},(err,result) => {
-        db.collection('posts').update({_id : new ObjectId(req.body.post_id)},{$inc : {comments : 1}})
-        if (check(err,res)) return
+app.post('/comments', (req, res) => {
+    db.collection('comments').insertOne({...req.body, time: getTime()}, (err, result) => {
+        db.collection('posts').update({_id: new ObjectId(req.body.post_id)}, {$inc: {comments: 1}})
+        if (check(err, res)) return
         res.json(ok(result.ops[0]))
     })
 })
 
-app.get('/comments/:id',(req,res) => {
+app.get('/comments/:id', (req, res) => {
     const post_id = req.params.id;
-    db.collection('comments').find({post_id}).toArray((err,result) =>{
-        if (check(err,res)) return
+    db.collection('comments').find({post_id}).toArray((err, result) => {
+        if (check(err, res)) return
         res.json(ok(result))
     })
 })
 
-app.get('/posts',(req,res) => {
-    db.collection('posts').find({}).toArray((err,result) => {
+app.get('/posts', (req, res) => {
+    db.collection('posts').find({}).toArray((err, result) => {
         res.json(ok(result))
     })
 })
 
-server.listen(6868, () => console.log('server started at post 6868'))
+server.listen(6868, () => console.log('server started at port 6868'))

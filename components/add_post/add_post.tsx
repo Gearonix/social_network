@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import * as React from 'react';
 import * as ImagePicker from "expo-image-picker";
 import {Header, HeaderText, Input, PostImage, Publication, Share} from "./add_post.styles";
 import {Keyboard} from 'react-native';
@@ -6,7 +6,10 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import {addPost, UploadImage} from "../../reducers/login_reducer";
 import {useDispatch, useSelector} from "react-redux";
 
-const AddPost = ({isOpen,qclose}) =>  {
+type Props = {isOpen : boolean,qclose : () => void}
+
+const AddPost = ({isOpen,qclose} : Props) =>  {
+    const  {useEffect, useState, useRef} = React
     const sheetRef = useRef(null);
     const [file, setFile] = useState(null)
     const [value, setValue] = useState('')
@@ -39,6 +42,7 @@ const AddPost = ({isOpen,qclose}) =>  {
         </Publication>
     };
     const AsyncUseEffect = async () => {
+        // @ts-ignore
         const result = await ImagePicker.launchImageLibraryAsync(imageConfig);
         if (result?.cancelled){
             qclose();

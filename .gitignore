@@ -12,12 +12,12 @@ web-build/
 /.expo-shared
 /for_work
 app.json
-babel.config.js
+babel.config.ts
 yarn-error.log
 yarn.lock
 *.txt
 /source
-config___.js
+config.ts
 /for_work
 /backend/static
 
