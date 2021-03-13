@@ -1,7 +1,13 @@
 import styled from 'styled-components/native';
 import {Dimensions} from 'react-native';
 
-const pt = (param,def='0px') => (props) => props[param] ? props[param] : def
+const pt = (param : string,def='0px') => (props) => props[param] ? props[param] : def
+export const margins = () => `
+  margin-top: ${pt('mt')};
+  margin-right: ${pt('mr')};
+  margin-left: ${pt('ml')};
+  margin-bottom: ${pt('mb')};
+  `
 export const Button = styled.TouchableOpacity`
   background : ${pt('background')};
   border: ${pt('border','none')};
@@ -45,6 +51,8 @@ export const Flex = styled.View`
   flex-direction: row;
   justify-content: ${pt('jc','flex-start')};
   align-items: ${pt('ai','flex-start')};
+  ${margins()}
+  margin-left: ${pt('ml')}
 `
 export const Page = styled.View`
   width: 100%;

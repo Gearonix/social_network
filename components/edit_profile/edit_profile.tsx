@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {createInput} from "../login/login";
 import {useFormik} from "formik";
 import {FullContainer,  Text} from "../../global/styles";

@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import * as React from 'react';
 import {Container, Page} from "../../global/styles";
 import Navbar from "../others/navbar/navbar";
 import {
@@ -14,7 +14,7 @@ import {AntDesign} from "@expo/vector-icons";
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {getUser, search, setFoundUsers} from "../../reducers/users_reducer";
-import config from "../../config___";
+import config from "../../config";
 import {DefaultUserAvatar} from "../profile/profile.items";
 
 const Search = ({navigation}) => {
@@ -23,7 +23,7 @@ const Search = ({navigation}) => {
     const onSubmit = ({search : value}) => {
         dispatch(search(value.toLowerCase()))
     }
-    useEffect(() => () => {
+    React.useEffect(() => () => {
         dispatch(setFoundUsers([]))
     },[])
     const current_user_id = useSelector(state => state.login.user_id)
@@ -38,24 +38,33 @@ const Search = ({navigation}) => {
     }
     const {found_users} = useSelector(state => state.users);
     const found_users_elements = found_users.filter(item => item._id!==current_user_id)
+        //@ts-ignore
         .map(item =>  <FoundUser username={item.username}
     description={item.description} avatar_path={item.avatar_path} callback={navigate(item._id)} />)
     // getUser
     return <Page>
         <Container>
-            <InpContainer>
-                <IconContainer><Icon name={'search1'}/></IconContainer>
-                <InputStyle style={noneBorder} placeholder={'Search'} placeholderTextColor={'white'}
-                            value={values.search} onChangeText={prepareToSubmit}/>
-            </InpContainer>
+            {/*@ts-ignore*/}
+            <Inp callback={prepareToSubmit} value={values.search} />
             {found_users_elements}
         </Container>
         <Navbar navigate={navigation.navigate}/>
     </Page>
 }
-const FoundUser = ({username,description,user_id,avatar_path,callback=()=>{}}) => {
+export const Inp = ({callback=()=>{},value=''}) => {
+    return   <InpContainer>
+        <IconContainer><Icon name={'search1'}/></IconContainer>
+        <InputStyle style={noneBorder} placeholder={'Search'} placeholderTextColor={'white'}
+                    value={value} onChangeText={callback}/>
+    </InpContainer>
+}
+type FoundUserT = {username : string,description?:string,user_id?:string,
+    avatar_path?: string | null,callback?: Function}
+
+export const FoundUser = ({username,description,user_id,avatar_path,callback=()=>{}} : FoundUserT) => {
     const image_component = avatar_path ?  <UserImage
         source={{uri: `${config.BASE_URL}/user_avatars/${avatar_path}`}}/> :
+        //@ts-ignore
         <DefaultUserAvatar size={'45px'} text={username} textSize={'17px'} />
     return  <FoundUserItemContainer onPress={callback}>
         {image_component}

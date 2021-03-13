@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import {FullContainer} from "../../global/styles";
 import { FontAwesome5 } from '@expo/vector-icons';
 import {Item, Text} from "./edit_profile_settings.styles";

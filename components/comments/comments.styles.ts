@@ -12,8 +12,11 @@ export const Main = styled.View`
   margin-top: 17px;
 `
 export const UserName = styled.Text`
-  font-size: 17px;
+  font-size: 20px;
   color: white;
+  margin-top: 7px;
+  margin-left: 11px;
+  margin-bottom: 2px;
 `
 export const Avatar = styled.Image`
   width: 100%;
@@ -31,8 +34,10 @@ export const UserData = styled.View`
   height: 100%;
   width: 200px;
 `
-export const Message = styled(UserName)`
-  margin-top: 3px;
+export const MessageText = styled(UserName)`
+  font-size: 17px;
+  margin-top: 0;
+  margin-left: 11px;
 `
 export const Date = styled.Text`
   color : #989898;
